@@ -1,7 +1,6 @@
 from turtle import Turtle
 from slot import Slot
 from random import randint
-
 from config import (
     DEFAULT_SLOT_SIZE, NUMBER_OF_SLOTS, SLOT_SHAPE,
     VERTICAL_SHAPE_STRETCH, HORIZONTAL_SHAPE_STRETCH, OUTLINE_SIZE,

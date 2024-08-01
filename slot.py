@@ -1,11 +1,9 @@
 from turtle import Turtle
 from random import randint
-
-SLOT_ALIGNMENT = "center"
-SLOT_FONT_SIZE = 50
-SLOT_FONT = ("Courier", SLOT_FONT_SIZE, "bold")
-TOP_SECONDARY_SLOT = "top"
-BOTTOM_SECONDARY_SLOT = "bottom"
+from config import (
+    SLOT_ALIGNMENT, SLOT_FONT_SIZE, SLOT_FONT,
+    TOP_SECONDARY_SLOT, BOTTOM_SECONDARY_SLOT
+)
 
 
 class Slot(Turtle):
