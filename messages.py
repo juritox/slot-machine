@@ -30,6 +30,10 @@ class Messages(Turtle):
         self.clear()
         self.write(f"You lost {lost_amount}!", align=MESSAGES_ALIGNMENT, font=MESSAGES_FONT)
 
+    def remove_messages(self):
+        """Clear the messages text from the screen."""
+        self.clear()
+
 
 class Instructions(Turtle):
     """Represents a display of instructions for the slot machine."""

@@ -103,6 +103,7 @@ class Machine:
         try:
             pull_cycles = randint(MIN_PULL_CYCLES, MAX_PULL_CYCLES)
             self.instructions.hide_instructions()
+            self.messages.remove_messages()
 
             for _ in range(pull_cycles):
                 for slot in self.main_slots:
