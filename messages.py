@@ -1,16 +1,12 @@
 from turtle import Turtle
 
-INSTRUCTIONS_ALIGNMENT = "center"
-INSTRUCTIONS_FONT = ("Arial", 30, "bold")
-INSTRUCTIONS_X_POSITION = 0
-INSTRUCTIONS_Y_POSITION = -300
-DEFAULT_INSTRUCTIONS = "Press SPACE to pull!\n"
-HOW_TO_EXIT = "Press Escape to exit the game."
-HOW_TO_EXIT_FONT = ("Arial", 14, "normal")
-MESSAGES_ALIGNMENT = "center"
-MESSAGES_FONT = ("Arial", 25, "bold")
-MESSAGES_X_POSITION = 0
-MESSAGES_Y_POSITION = 280
+from config import (
+    INSTRUCTIONS_ALIGNMENT, INSTRUCTIONS_FONT, INSTRUCTIONS_COLOR,
+    INSTRUCTIONS_X_POSITION, INSTRUCTIONS_Y_POSITION,
+    DEFAULT_INSTRUCTIONS, HOW_TO_EXIT, HOW_TO_EXIT_FONT,
+    MESSAGES_ALIGNMENT, MESSAGES_FONT, MESSAGES_COLOR,
+    MESSAGES_X_POSITION, MESSAGES_Y_POSITION
+)
 
 
 class Messages(Turtle):
@@ -19,7 +15,7 @@ class Messages(Turtle):
     def __init__(self):
         """Initialize messages text and position."""
         super().__init__()
-        self.color("white")
+        self.color(MESSAGES_COLOR)
         self.penup()
         self.hideturtle()
         self.goto(MESSAGES_X_POSITION, MESSAGES_Y_POSITION)
@@ -43,7 +39,7 @@ class Instructions(Turtle):
         super().__init__()
         self.instructions = DEFAULT_INSTRUCTIONS
         self.how_to_exit = HOW_TO_EXIT
-        self.color("white")
+        self.color(INSTRUCTIONS_COLOR)
         self.penup()
         self.hideturtle()
         self.goto(INSTRUCTIONS_X_POSITION, INSTRUCTIONS_Y_POSITION)

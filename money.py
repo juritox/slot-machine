@@ -1,12 +1,9 @@
 from turtle import Turtle
 
-MONEY_ALIGNMENT = "center"
-MONEY_FONT = ("Courier", 20, "bold")
-MONEY_X_POSITION = 0
-MONEY_Y_POSITION = 360
-DEFAULT_MONEY = 1000
-WIN_PRIZE = 2000
-PULL_COST = 50
+from config import (
+    MONEY_ALIGNMENT, MONEY_FONT, DEFAULT_MONEY_COLOR, LOW_MONEY_COLOR,
+    MONEY_X_POSITION, MONEY_Y_POSITION, DEFAULT_MONEY, WIN_PRIZE, PULL_COST
+)
 
 
 class Money(Turtle):
@@ -18,7 +15,7 @@ class Money(Turtle):
         self.money = DEFAULT_MONEY
         self.win_prize = WIN_PRIZE
         self.pull_cost = PULL_COST
-        self.color("white")
+        self.color(DEFAULT_MONEY_COLOR)
         self.penup()
         self.hideturtle()
         self.goto(MONEY_X_POSITION, MONEY_Y_POSITION)
@@ -28,9 +25,9 @@ class Money(Turtle):
         """Update the display of money."""
         self.clear()
         if self.money < self.pull_cost:
-            self.color("red")
+            self.color(LOW_MONEY_COLOR)
         else:
-            self.color("white")
+            self.color(DEFAULT_MONEY_COLOR)
         self.write(f"Money: {self.money}", align=MONEY_ALIGNMENT, font=MONEY_FONT)
 
     def increase_money(self, amount):

@@ -4,6 +4,8 @@ from random import randint
 SLOT_ALIGNMENT = "center"
 SLOT_FONT_SIZE = 50
 SLOT_FONT = ("Courier", SLOT_FONT_SIZE, "bold")
+TOP_SECONDARY_SLOT = "top"
+BOTTOM_SECONDARY_SLOT = "bottom"
 
 
 class Slot(Turtle):
@@ -15,9 +17,9 @@ class Slot(Turtle):
         self.color(color)
         self.penup()
         self.hideturtle()
-        if secondary_slot == "top":
+        if secondary_slot == TOP_SECONDARY_SLOT:
             self.value = None
-        elif secondary_slot == "bottom":
+        elif secondary_slot == BOTTOM_SECONDARY_SLOT:
             self.value = None
         else:
             self.value = randint(0, 9)
@@ -26,12 +28,12 @@ class Slot(Turtle):
     def update_slot(self, secondary_slot=None, primary_slot_value=None):
         """Update the slot's display with its current value. Adjust secondary slots accordingly."""
         self.clear()
-        if secondary_slot == "top":
+        if secondary_slot == TOP_SECONDARY_SLOT:
             if primary_slot_value == 9:
                 self.value = 0
             else:
                 self.value = primary_slot_value + 1
-        if secondary_slot == "bottom":
+        if secondary_slot == BOTTOM_SECONDARY_SLOT:
             if primary_slot_value == 0:
                 self.value = 9
             else:
