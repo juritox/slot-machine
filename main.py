@@ -2,6 +2,7 @@ from turtle import Screen, mainloop
 from machine import Machine
 from messages import Instructions, Messages
 from money import Money
+from validation import validate_configurations
 from config import (
     SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BG_COLOR,
     KEY_TO_PULL, KEY_TO_EXIT
@@ -22,6 +23,13 @@ def play(screen, machine):
 
 def main():
     """Initialize the slot machine game and start the main loop."""
+
+    try:
+        validate_configurations()
+    except ValueError as e:
+        print(f"Configuration Error:\n{e}")
+        exit(1)  # Terminate the program immediately
+
     screen = Screen()
     screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
     screen.bgcolor(SCREEN_BG_COLOR)

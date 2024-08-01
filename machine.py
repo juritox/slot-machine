@@ -124,7 +124,7 @@ class Machine:
             self.processing = False
 
     def check_winning(self):
-        """Check if all the slots have the same value so player win or lose."""
+        """Check if all the slots have the same value so player wins or loses."""
         first_slot = self.main_slots[0]
         for slot in self.main_slots[1:]:
             if slot.get_value() != first_slot.get_value():

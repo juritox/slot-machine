@@ -9,7 +9,7 @@ KEY_TO_PULL = "space"
 KEY_TO_EXIT = "Escape"
 
 # Machine configuration
-NUMBER_OF_SLOTS = 3
+NUMBER_OF_SLOTS = 3  # Number of slots must be at least 2
 DEFAULT_SLOT_SIZE = 20  # Do not change this value, it is Turtle default size
 SLOT_SHAPE = "square"
 VERTICAL_SHAPE_STRETCH = 5
@@ -30,8 +30,8 @@ MAIN_SLOT_NUMBER_COLOR = "red"
 SECONDARY_SLOT_NUMBER_COLOR = "orange"
 
 # Game logic
-MIN_PULL_CYCLES = 10
-MAX_PULL_CYCLES = 20
+MIN_PULL_CYCLES = 10  # Must be at least 1 and not greater than MAX_PULL_CYCLES
+MAX_PULL_CYCLES = 20  # Must not be greater than 100
 
 # Slot configuration
 SLOT_ALIGNMENT = "center"
