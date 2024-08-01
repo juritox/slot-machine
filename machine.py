@@ -1,29 +1,25 @@
-from turtle import Turtle, Screen
+from turtle import Turtle
 from slot import Slot
-from money import Money
-from messages import Instructions, Messages
 from random import randint
 
 DEFAULT_SLOT_SIZE = 20  # Do not change this value, it is Turtle default size
-
 NUMBER_OF_SLOTS = 3
 VERTICAL_SHAPE_STRETCH = 5
 HORIZONTAL_SHAPE_STRETCH = 5
 OUTLINE_SIZE = 10
 STARTING_Y_POSITION = 0
 
-screen = Screen()
-screen.tracer(0)
-money = Money()
-instructions = Instructions()
-messages = Messages()
-
 
 class Machine:
     """Represents a slot machine with slots arranged in a specific pattern."""
 
-    def __init__(self):
+    def __init__(self, screen, money, instructions, messages):
         """Initialize the machine with slots and create the machine."""
+        self.screen = screen
+        self.money = money
+        self.instructions = instructions
+        self.messages = messages
+
         self.machine_slots = []
         self.top_secondary_slots = []
         self.bottom_secondary_slots = []
@@ -102,8 +98,7 @@ class Machine:
 
         try:
             pull_cycles = randint(10, 20)
-
-            instructions.hide_instructions()
+            self.instructions.hide_instructions()
 
             for _ in range(pull_cycles):
                 for slot in self.machine_slots:
@@ -111,14 +106,14 @@ class Machine:
                 self.update_slots()
 
             if self.check_winning():
-                money.increase_money(money.get_win_prize())
-                messages.player_won_message(money.get_win_prize())
+                self.money.increase_money(self.money.get_win_prize())
+                self.messages.player_won_message(self.money.get_win_prize())
             else:
-                money.decrease_money(money.get_pull_cost())
-                messages.player_lost_message(money.get_pull_cost())
+                self.money.decrease_money(self.money.get_pull_cost())
+                self.messages.player_lost_message(self.money.get_pull_cost())
 
-            money.update_money()
-            instructions.show_instructions()
+            self.money.update_money()
+            self.instructions.show_instructions()
 
         finally:
             self.processing = False

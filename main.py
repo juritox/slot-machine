@@ -1,32 +1,43 @@
 from turtle import Screen, mainloop
 from machine import Machine
+from messages import Instructions, Messages
+from money import Money
 
 
-def exit_program():
+def exit_program(screen):
     """Exit the program."""
     screen.bye()
 
 
-def play():
+def play(screen, machine):
     """Play the slot machine game."""
     screen.listen()
     screen.onkey(machine.pull, "space")
-    screen.onkey(exit_program, "Escape")
+    screen.onkey(lambda: exit_program(screen), "Escape")
 
 
-screen = Screen()
-screen.setup(width=800, height=800)
-screen.bgcolor("black")
-screen.title("Slot Machine")
+def main():
+    """Initialize the slot machine game and start the main loop."""
+    screen = Screen()
+    screen.setup(width=800, height=800)
+    screen.bgcolor("black")
+    screen.title("Slot Machine")
 
-screen.tracer(0)
+    screen.tracer(0)
 
-machine = Machine()
-screen.update()
+    money = Money()
+    instructions = Instructions()
+    messages = Messages()
+    machine = Machine(screen, money, instructions, messages)
+    screen.update()
 
-screen.tracer(1)
-machine.update_slots()
+    screen.tracer(1)
+    machine.update_slots()
 
-play()
+    play(screen, machine)
 
-mainloop()
+    mainloop()
+
+
+if __name__ == "__main__":
+    main()

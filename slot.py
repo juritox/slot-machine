@@ -39,7 +39,7 @@ class Slot(Turtle):
         self.write(f"{self.value}", align=SLOT_ALIGNMENT, font=SLOT_FONT)
 
     def randomize_slot(self):
-        self.value = self.value = randint(0, 9)
+        self.value = randint(0, 9)
 
     def get_value(self):
         """Return the slot value."""
