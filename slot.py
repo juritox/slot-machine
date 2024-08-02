@@ -6,7 +6,7 @@ and manages the slot's value and position.
 """
 
 from turtle import Turtle
-from typing import Optional, Union
+from typing import Optional, Union, cast
 from random import choice
 from config import (
     SLOT_ALIGNMENT, SLOT_FONT_SIZE, SLOT_FONT,
@@ -44,7 +44,7 @@ class Slot(Turtle):
         self.color(color)
         self.penup()
         self.hideturtle()
-        self.values: list[Union[str, int]] = SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS
+        self.values = cast(list[Union[str, int]], SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS)
         self.value: Optional[Union[str, int]] = choice(self.values) if secondary_slot is None else None
         self.goto(x_position, y_position - SLOT_FONT_SIZE / 2 - SLOT_FONT_SIZE / 4)
 
@@ -81,23 +81,24 @@ class Slot(Turtle):
             main_slot_value (Optional[Union[str, int]]): The value of the primary slot, if applicable.
         """
         self.clear()
-        if secondary_slot == TOP_SECONDARY_SLOT:
+        if secondary_slot == TOP_SECONDARY_SLOT and main_slot_value is not None:
             index = (self.values.index(main_slot_value) + 1) % len(self.values)
             self.value = self.values[index]
-        elif secondary_slot == BOTTOM_SECONDARY_SLOT:
+        elif secondary_slot == BOTTOM_SECONDARY_SLOT and main_slot_value is not None:
             index = (self.values.index(main_slot_value) - 1) % len(self.values)
             self.value = self.values[index]
-        self.write(f"{self.value}", align=SLOT_ALIGNMENT, font=SLOT_FONT)
+        if self.value is not None:
+            self.write(f"{self.value}", align=SLOT_ALIGNMENT, font=SLOT_FONT)
 
     def randomize_slot(self) -> None:
         """Randomly select a new value for the slot."""
         self.value = choice(self.values)
 
-    def get_value(self) -> Union[str, int]:
+    def get_value(self) -> Optional[Union[str, int]]:
         """
         Get the current value of the slot.
 
         Returns:
-            Union[str, int]: The current value displayed on the slot.
+            Optional[Union[str, int]]: The current value displayed on the slot.
         """
         return self.value

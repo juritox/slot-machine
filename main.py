@@ -6,7 +6,7 @@ and starts the main game loop.
 """
 
 from turtle import Screen, mainloop
-from typing import NoReturn
+from typing import NoReturn, TypeVar
 from machine import Machine
 from messages import Instructions, Messages
 from money import Money
@@ -16,18 +16,22 @@ from config import (
     KEY_TO_PULL, KEY_TO_EXIT
 )
 
+# Define a type variable for Screen
+ScreenType = TypeVar('ScreenType', bound=Screen)  # type: ignore
 
-def exit_program(screen: Screen) -> NoReturn:
+
+def exit_program(screen: ScreenType) -> NoReturn:
     """
     Exit the program.
 
     Args:
         screen (Screen): The turtle screen to close.
     """
-    screen.bye()
+    screen.bye()  # type: ignore
+    raise SystemExit
 
 
-def play(screen: Screen, machine: Machine) -> None:
+def play(screen: ScreenType, machine: Machine) -> None:
     """
     Set up the game controls and start the game loop.
 
@@ -35,9 +39,9 @@ def play(screen: Screen, machine: Machine) -> None:
         screen (Screen): The turtle screen for the game.
         machine (Machine): The slot machine object.
     """
-    screen.listen()
-    screen.onkey(machine.pull, KEY_TO_PULL)
-    screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)
+    screen.listen()  # type: ignore
+    screen.onkey(machine.pull, KEY_TO_PULL)  # type: ignore
+    screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)  # type: ignore
 
 
 def main() -> None:
