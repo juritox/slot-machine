@@ -10,8 +10,10 @@ This project showcases:
 - **Graphical User Interface (GUI):** Implements a graphical user interface using Turtle graphics.
 - **Game Mechanics:** Simulates basic slot machine operations without real money involvement.
 
-## Showcase
-![Slot Machine](slot_machine_screenshot.png)
+## Game Showcase
+![Slot Machine](slot_machine_screenshot_symbols.png)
+
+![Slot Machine](slot_machine_screenshot_numbers.png)
 
 ## Important Notes
 
