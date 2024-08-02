@@ -1,4 +1,5 @@
 from turtle import Screen, mainloop
+from typing import NoReturn
 from machine import Machine
 from messages import Instructions, Messages
 from money import Money
@@ -9,19 +10,19 @@ from config import (
 )
 
 
-def exit_program(screen):
+def exit_program(screen: Screen) -> NoReturn:
     """Exit the program."""
     screen.bye()
 
 
-def play(screen, machine):
+def play(screen: Screen, machine: Machine) -> None:
     """Play the slot machine game."""
     screen.listen()
     screen.onkey(machine.pull, KEY_TO_PULL)
     screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)
 
 
-def main():
+def main() -> None:
     """Initialize the slot machine game and start the main loop."""
 
     try:
@@ -40,7 +41,7 @@ def main():
     money = Money()
     instructions = Instructions()
     messages = Messages()
-    machine = Machine(screen, money, instructions, messages)
+    machine = Machine(money, instructions, messages)
     screen.update()
 
     screen.tracer(1)

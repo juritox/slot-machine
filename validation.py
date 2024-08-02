@@ -1,10 +1,10 @@
 from config import NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES
 
 
-def validate_configurations():
+def validate_configurations() -> None:
     """Validate configuration parameters."""
 
-    errors = []
+    errors: list[str] = []
 
     if NUMBER_OF_SLOTS < 2:
         errors.append("NUMBER_OF_SLOTS must be at least 2.")
