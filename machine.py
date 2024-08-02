@@ -1,3 +1,10 @@
+"""
+This module defines the Machine class, which represents the entire slot machine.
+
+The Machine class manages the collection of slots, handles the pull mechanism,
+and determines winning conditions.
+"""
+
 from turtle import Turtle
 from typing import Optional
 from slot import Slot
@@ -15,10 +22,31 @@ from config import (
 
 
 class Machine:
-    """Represents a slot machine with slots arranged in a specific pattern."""
+    """
+    Represents the entire slot machine.
+
+    This class manages the collection of slots, handles the pull mechanism,
+    and determines winning conditions.
+
+    Attributes:
+        money (Money): The money management object for this machine.
+        instructions (Instructions): The instructions display object.
+        messages (Messages): The messages display object.
+        main_slots (list[Slot]): The list of main slot objects.
+        top_secondary_slots (list[Slot]): The list of top secondary slot objects.
+        bottom_secondary_slots (list[Slot]): The list of bottom secondary slot objects.
+        processing (bool): Indicates whether the machine is currently processing a pull.
+    """
 
     def __init__(self, money: Money, instructions: Instructions, messages: Messages) -> None:
-        """Initialize the machine with slots and create the machine."""
+        """
+        Initialize a new Machine instance.
+
+        Args:
+            money (Money): The money management object for this machine.
+            instructions (Instructions): The instructions display object.
+            messages (Messages): The messages display object.
+        """
         self.money: Money = money
         self.instructions: Instructions = instructions
         self.messages: Messages = messages
@@ -28,8 +56,27 @@ class Machine:
         self.processing: bool = False
         self.create_machine()
 
+    def __str__(self) -> str:
+        """
+        Return a human-readable string representation of the Machine object.
+
+        Returns:
+            str: A string showing the current state of the main slots.
+        """
+        slot_values = [slot.get_value() for slot in self.main_slots]
+        return f"Machine: {slot_values}"
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the Machine object.
+
+        Returns:
+            str: A string representation of the Machine object.
+        """
+        return f"Machine(slots={len(self.main_slots)}, processing={self.processing})"
+
     def create_machine(self) -> None:
-        """Create the graphics for a slot machine with main slots and top and bottom secondary slots."""
+        """Create the graphics for the slot machine with main and secondary slots."""
         # Calculate the width and height of one slot
         slot_width = DEFAULT_SLOT_SIZE * HORIZONTAL_SHAPE_STRETCH
         slot_height = DEFAULT_SLOT_SIZE * VERTICAL_SHAPE_STRETCH
@@ -57,8 +104,14 @@ class Machine:
             self.add_slot(starting_x_position + slot * slot_width, STARTING_Y_POSITION, MAIN_SLOT_DISPLAY_COLOR)
 
     def add_slot(self, x_position: float, y_position: float, color: str, secondary_slot: Optional[str] = None) -> None:
-        """Add a slot to the machine.
-        Param secondary_slot can be TOP_SECONDARY_SLOT or BOTTOM_SECONDARY_SLOT to create respective secondary slots.
+        """
+        Add a slot to the machine.
+
+        Args:
+            x_position (float): The x-coordinate for the slot's position.
+            y_position (float): The y-coordinate for the slot's position.
+            color (str): The color of the slot's text.
+            secondary_slot (Optional[str]): Indicates if this is a secondary slot and its position (top or bottom).
         """
         new_slot_graphics = Turtle()
         new_slot_graphics.shape(SLOT_SHAPE)
@@ -93,7 +146,12 @@ class Machine:
             slot.update_slot(secondary_slot=BOTTOM_SECONDARY_SLOT, main_slot_value=value)
 
     def pull(self) -> None:
-        """Simulate pull of the machine. Generate new random slot values."""
+        """
+        Simulate a pull of the slot machine.
+
+        This method randomizes the slots, checks for winning conditions,
+        and updates the player's money accordingly.
+        """
         if self.processing:
             return
 
@@ -123,7 +181,12 @@ class Machine:
             self.processing = False
 
     def check_winning(self) -> bool:
-        """Check if all the slots have the same value so player wins or loses."""
+        """
+        Check if the current slot configuration is a winning one.
+
+        Returns:
+            bool: True if all slots have the same value, False otherwise.
+        """
         first_slot = self.main_slots[0]
         for slot in self.main_slots[1:]:
             if slot.get_value() != first_slot.get_value():

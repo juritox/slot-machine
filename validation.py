@@ -1,3 +1,10 @@
+"""
+This module provides validation functions for the Slot Machine game configuration.
+
+It includes functions to validate various game settings and ensure they meet
+the required criteria for the game to function correctly.
+"""
+
 from config import (
     NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
     SLOT_SYMBOLS
@@ -5,8 +12,15 @@ from config import (
 
 
 def validate_configurations() -> None:
-    """Validate configuration parameters."""
+    """
+    Validate configuration parameters.
 
+    This function checks various configuration settings to ensure they meet
+    the required criteria for the game to function correctly.
+
+    Raises:
+        ValueError: If any configuration setting is invalid.
+    """
     errors: list[str] = []
 
     if NUMBER_OF_SLOTS < 2:

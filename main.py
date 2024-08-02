@@ -1,3 +1,10 @@
+"""
+This is the main module for the Slot Machine game.
+
+It initializes the game, sets up the screen, creates the necessary objects,
+and starts the main game loop.
+"""
+
 from turtle import Screen, mainloop
 from typing import NoReturn
 from machine import Machine
@@ -11,20 +18,35 @@ from config import (
 
 
 def exit_program(screen: Screen) -> NoReturn:
-    """Exit the program."""
+    """
+    Exit the program.
+
+    Args:
+        screen (Screen): The turtle screen to close.
+    """
     screen.bye()
 
 
 def play(screen: Screen, machine: Machine) -> None:
-    """Play the slot machine game."""
+    """
+    Set up the game controls and start the game loop.
+
+    Args:
+        screen (Screen): The turtle screen for the game.
+        machine (Machine): The slot machine object.
+    """
     screen.listen()
     screen.onkey(machine.pull, KEY_TO_PULL)
     screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)
 
 
 def main() -> None:
-    """Initialize the slot machine game and start the main loop."""
+    """
+    Initialize the slot machine game and start the main loop.
 
+    This function sets up the game environment, creates necessary objects,
+    and starts the game loop.
+    """
     try:
         validate_configurations()
     except ValueError as e:

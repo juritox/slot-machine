@@ -1,3 +1,11 @@
+"""
+Configuration file for the Slot Machine game.
+
+This module contains all the constant values used throughout the game,
+including screen settings, game controls, machine configuration,
+slot settings, and display parameters.
+"""
+
 # Screen configuration
 SCREEN_WIDTH: int = 800
 SCREEN_HEIGHT: int = 800
