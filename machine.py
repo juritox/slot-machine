@@ -86,11 +86,11 @@ class Machine:
 
         for index, slot in enumerate(self.top_secondary_slots):
             value = self.main_slots[index].get_value()
-            slot.update_slot(secondary_slot=TOP_SECONDARY_SLOT, primary_slot_value=value)
+            slot.update_slot(secondary_slot=TOP_SECONDARY_SLOT, main_slot_value=value)
 
         for index, slot in enumerate(self.bottom_secondary_slots):
             value = self.main_slots[index].get_value()
-            slot.update_slot(secondary_slot=BOTTOM_SECONDARY_SLOT, primary_slot_value=value)
+            slot.update_slot(secondary_slot=BOTTOM_SECONDARY_SLOT, main_slot_value=value)
 
     def pull(self):
         """Simulate pull of the machine. Generate new random slot values."""

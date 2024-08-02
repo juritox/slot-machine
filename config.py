@@ -29,6 +29,12 @@ SECONDARY_SLOT_OUTLINE_COLOR = "black"
 MAIN_SLOT_NUMBER_COLOR = "red"
 SECONDARY_SLOT_NUMBER_COLOR = "orange"
 
+# Slot values
+# Avoid using symbols like 7️⃣ which combines two Unicode characters
+SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '🎰']
+SLOT_NUMBERS = list(range(10))  # 0 to 9
+USE_SYMBOLS = True  # Set as False to use numbers
+
 # Game logic
 MIN_PULL_CYCLES = 10  # Must be at least 1 and not greater than MAX_PULL_CYCLES
 MAX_PULL_CYCLES = 20  # Must not be greater than 100

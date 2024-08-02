@@ -1,8 +1,9 @@
 from turtle import Turtle
-from random import randint
+from random import choice
 from config import (
     SLOT_ALIGNMENT, SLOT_FONT_SIZE, SLOT_FONT,
-    TOP_SECONDARY_SLOT, BOTTOM_SECONDARY_SLOT
+    TOP_SECONDARY_SLOT, BOTTOM_SECONDARY_SLOT,
+    SLOT_SYMBOLS, SLOT_NUMBERS, USE_SYMBOLS
 )
 
 
@@ -15,31 +16,23 @@ class Slot(Turtle):
         self.color(color)
         self.penup()
         self.hideturtle()
-        if secondary_slot == TOP_SECONDARY_SLOT:
-            self.value = None
-        elif secondary_slot == BOTTOM_SECONDARY_SLOT:
-            self.value = None
-        else:
-            self.value = randint(0, 9)
+        self.values = SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS
+        self.value = choice(self.values) if secondary_slot is None else None
         self.goto(x_position, y_position - SLOT_FONT_SIZE / 2 - SLOT_FONT_SIZE / 4)
 
-    def update_slot(self, secondary_slot=None, primary_slot_value=None):
+    def update_slot(self, secondary_slot=None, main_slot_value=None):
         """Update the slot's display with its current value. Adjust secondary slots accordingly."""
         self.clear()
         if secondary_slot == TOP_SECONDARY_SLOT:
-            if primary_slot_value == 9:
-                self.value = 0
-            else:
-                self.value = primary_slot_value + 1
-        if secondary_slot == BOTTOM_SECONDARY_SLOT:
-            if primary_slot_value == 0:
-                self.value = 9
-            else:
-                self.value = primary_slot_value - 1
+            index = (self.values.index(main_slot_value) + 1) % len(self.values)
+            self.value = self.values[index]
+        elif secondary_slot == BOTTOM_SECONDARY_SLOT:
+            index = (self.values.index(main_slot_value) - 1) % len(self.values)
+            self.value = self.values[index]
         self.write(f"{self.value}", align=SLOT_ALIGNMENT, font=SLOT_FONT)
 
     def randomize_slot(self):
-        self.value = randint(0, 9)
+        self.value = choice(self.values)
 
     def get_value(self):
         """Return the slot value."""
