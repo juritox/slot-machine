@@ -30,8 +30,8 @@ MAIN_SLOT_DISPLAY_COLOR: str = "red"
 SECONDARY_SLOT_DISPLAY_COLOR: str = "orange"
 
 # Slot values
-# Avoid using symbols like 7️⃣ which combines two Unicode characters
-SLOT_SYMBOLS: list[str] = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '🎰']
+# Avoid using symbols like 7️⃣ which combines more Unicode characters
+SLOT_SYMBOLS: list[str] = ["🍒", "🍋", "🍊", "🍇", "🔔", "💎", "🎰"]
 SLOT_NUMBERS: list[int] = list(range(10))  # 0 to 9
 USE_SYMBOLS: bool = True  # Set as False to use numbers
 

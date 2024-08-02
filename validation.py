@@ -1,4 +1,7 @@
-from config import NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES
+from config import (
+    NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
+    SLOT_SYMBOLS
+)
 
 
 def validate_configurations() -> None:
@@ -16,6 +19,11 @@ def validate_configurations() -> None:
         errors.append("MAX_PULL_CYCLES must not be greater than 100.")
     if MIN_PULL_CYCLES > MAX_PULL_CYCLES:
         errors.append("MIN_PULL_CYCLES must not be greater than MAX_PULL_CYCLES.")
+
+    # Validate SLOT_SYMBOLS
+    for i, symbol in enumerate(SLOT_SYMBOLS):
+        if len(symbol) > 1:
+            errors.append(f"Symbol at index {i} ({symbol}) is not a single Unicode character.")
 
     if errors:
         error_message = "\n".join(errors) + "\n\nPlease update config.py to correct these issues."
