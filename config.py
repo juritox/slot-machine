@@ -79,3 +79,8 @@ MESSAGES_FONT: tuple[str, int, str] = ("Arial", 25, "bold")
 MESSAGES_COLOR: str = "white"
 MESSAGES_X_POSITION: int = 0
 MESSAGES_Y_POSITION: int = 280
+
+# Logger configuration
+LOGGER_ON: bool = True
+LOGGER_SIMPLE_MODE: bool = True  # Set as False to use detailed log mode
+LOG_DIRECTORY: str = "Logs"  # Directory to store logs

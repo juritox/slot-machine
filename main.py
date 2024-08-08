@@ -10,6 +10,7 @@ from typing import NoReturn, TypeVar
 from machine import Machine
 from messages import Instructions, Messages
 from money import Money
+from logger import Logger
 from validation import validate_configurations
 from config import (
     SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BG_COLOR,
@@ -67,12 +68,14 @@ def main() -> None:
     money = Money()
     instructions = Instructions()
     messages = Messages()
-    machine = Machine(money, instructions, messages)
+    logger = Logger()
+    machine = Machine(money, instructions, messages, logger)
     screen.update()
 
     screen.tracer(1)
     machine.update_slots()
 
+    logger.log("Slot Machine game started.")
     play(screen, machine)
 
     mainloop()
