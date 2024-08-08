@@ -83,4 +83,4 @@ MESSAGES_Y_POSITION: int = 280
 # Logger configuration
 LOGGER_ON: bool = True
 LOGGER_SIMPLE_MODE: bool = True  # Set as False to use detailed log mode
-LOG_DIRECTORY: str = "logs"  # Directory to store logs
+LOG_DIRECTORY: str = "../logs"  # Directory to store logs

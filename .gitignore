@@ -1,3 +1,8 @@
-
+# Ignore IDE configuration directory
 /.idea
-/__pycache__
+
+# Ignore Python bytecode files
+/__pycache__/
+
+# Ignore bytecode files in the src directory
+/src/__pycache__/
