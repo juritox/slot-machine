@@ -1,8 +1,10 @@
 # Ignore IDE configuration directory
 /.idea
 
-# Ignore Python bytecode files
-/__pycache__/
+# Ignore all __pycache__ directories in the project
+__pycache__/
 
-# Ignore bytecode files in the src directory
-/src/__pycache__/
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+*.pyd
