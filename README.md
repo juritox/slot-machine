@@ -12,9 +12,26 @@ This project showcases:
 - **Logging:** Logs game actions and outcomes to text files in simple or detailed mode.
 
 ## Game Showcase
-![Slot Machine](slot_machine_screenshot_symbols.png)
+![Slot Machine](docs/slot_machine_screenshot_symbols.png)
 
-![Slot Machine](slot_machine_screenshot_numbers.png)
+![Slot Machine](docs/slot_machine_screenshot_numbers.png)
+
+## Installation Instructions
+
+To set up and run this project locally, follow these steps:
+
+### Prerequisites
+
+- Ensure you have [Python](https://www.python.org/downloads/) version 3.12 or higher installed on your machine.
+- Ensure you have [pip](https://pip.pypa.io/en/stable/) installed for managing Python packages.
+
+### Clone the Repository
+
+Clone this repository to your local machine using:
+
+```bash
+git clone https://github.com/juritox/slot-machine.git
+```
 
 ## Important Notes
 
