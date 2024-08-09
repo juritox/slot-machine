@@ -48,6 +48,14 @@ git clone https://github.com/juritox/slot-machine.git
 
 - If the scripts fail to run the game you can run it directly inside the `src` directory and running `main.py`.
 
+### Modifying Game Settings
+
+- To customize how the game operates and adjust its basic settings, you can modify the `config.py` file located in the `src` directory.
+
+- **Validation:** Some values in `config.py` are validated when starting the game to ensure they are not set incorrectly. Any errors or issues will be logged to the console.
+
+- **Advanced Configuration:** Modifying the configuration is intended for advanced users. It is recommended to use an Integrated Development Environment (IDE) for Python when making changes. Proceed with caution to avoid misconfigurations that might affect game functionality.
+
 ## Important Notes
 
 - **Educational Use Only**: This simulation is intended solely for educational purposes. It does not involve real money gambling and is designed to help learners understand programming concepts and basic game mechanics.
