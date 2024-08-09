@@ -25,6 +25,13 @@ To set up and run this project locally, follow these steps:
 - Ensure you have [Python](https://www.python.org/downloads/) version 3.12 or higher installed on your machine.
 - Ensure you have [pip](https://pip.pypa.io/en/stable/) installed for managing Python packages.
 
+### Install Dependencies
+
+- Ensure you have Python 3.12 and the Turtle module installed. Turtle is usually included with Python, but if you encounter any issues, you can install it via pip:
+```bash
+pip install PythonTurtle
+```
+
 ### Clone the Repository
 
 Clone this repository to your local machine using:
@@ -32,6 +39,14 @@ Clone this repository to your local machine using:
 ```bash
 git clone https://github.com/juritox/slot-machine.git
 ```
+
+## Running the Game
+
+- **Windows Instructions:** Simply navigate to the project directory and run the `run_game_windows.bat` script.
+
+- **Unix-based Systems Instructions:** Navigate to the project directory, ensure the `run_game_unix.sh` script is executable, and run it.
+
+- If the scripts fail to run the game you can run it directly inside the `src` directory and running `main.py`.
 
 ## Important Notes
 
