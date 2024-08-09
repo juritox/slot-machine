@@ -75,7 +75,7 @@ def main() -> None:
     screen.tracer(1)
     machine.update_slots()
 
-    logger.log("Slot Machine game started.")
+    logger.log("Slot Machine game is starting...")
     play(screen, machine)
 
     mainloop()

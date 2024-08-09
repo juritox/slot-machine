@@ -38,6 +38,11 @@ class Logger:
         self.logger_on: bool = logger_on
         self.simple_mode: bool = simple_mode
 
+        # Get the project root directory
+        project_root = path.dirname(path.abspath(__file__))
+        log_directory = path.join(project_root, LOG_DIRECTORY)
+
+        # Ensure the log directory exists
         if logger_on and not path.exists(log_directory):
             makedirs(log_directory)
 
@@ -109,7 +114,7 @@ class Logger:
             kwargs (dict[str, Any]): The keyword arguments passed to the function being logged.
         """
         if self.logger_on:
-            timestamp = strftime('%Y-%m-%D %H:%M:%S', localtime())
+            timestamp = strftime('%Y-%m-%d %H:%M:%S', localtime())
             arg_str = ', '.join(map(str, args))
             kwarg_str = ', '.join(f"{key}={value}" for key, value in kwargs.items())
             log_message = (f"{timestamp} - {function_name}(args={arg_str}, "

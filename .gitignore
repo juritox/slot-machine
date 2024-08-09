@@ -8,3 +8,9 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Ignore the logs directory
+logs/
+
+# Ignore .pyw files
+*.pyw
