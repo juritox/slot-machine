@@ -6,12 +6,13 @@ of game messages and instructions to the player.
 """
 
 from turtle import Turtle
+from money import Money
 from config import (
     INSTRUCTIONS_ALIGNMENT, INSTRUCTIONS_FONT, INSTRUCTIONS_COLOR,
     INSTRUCTIONS_X_POSITION, INSTRUCTIONS_Y_POSITION,
     DEFAULT_INSTRUCTIONS, HOW_TO_EXIT, HOW_TO_EXIT_FONT,
-    MESSAGES_ALIGNMENT, MESSAGES_FONT, MESSAGES_COLOR,
-    MESSAGES_X_POSITION, MESSAGES_Y_POSITION
+    MAIN_MESSAGES_ALIGNMENT, MAIN_MESSAGES_FONT, MESSAGES_COLOR,
+    MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION
 )
 
 
@@ -29,7 +30,6 @@ class Messages(Turtle):
         self.color(MESSAGES_COLOR)
         self.penup()
         self.hideturtle()
-        self.goto(MESSAGES_X_POSITION, MESSAGES_Y_POSITION)
 
     def __repr__(self) -> str:
         """
@@ -48,7 +48,8 @@ class Messages(Turtle):
             won_amount (int): The amount of money the player won.
         """
         self.clear()
-        self.write(f"You  won {won_amount}!", align=MESSAGES_ALIGNMENT, font=MESSAGES_FONT)
+        self.goto(MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION)
+        self.write(f"You  won {won_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
 
     def player_lost_message(self, lost_amount: int) -> None:
         """
@@ -58,7 +59,8 @@ class Messages(Turtle):
             lost_amount (int): The amount of money the player lost.
         """
         self.clear()
-        self.write(f"You lost {lost_amount}!", align=MESSAGES_ALIGNMENT, font=MESSAGES_FONT)
+        self.goto(MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION)
+        self.write(f"You lost {lost_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
 
     def remove_messages(self) -> None:
         """Clear all messages from the screen."""

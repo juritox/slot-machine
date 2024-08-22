@@ -9,7 +9,10 @@ decreasing the money amount.
 from turtle import Turtle
 from config import (
     MONEY_ALIGNMENT, MONEY_FONT, DEFAULT_MONEY_COLOR, LOW_MONEY_COLOR,
-    MONEY_X_POSITION, MONEY_Y_POSITION, DEFAULT_MONEY, WIN_PRIZE, PULL_COST
+    MONEY_X_POSITION, MONEY_Y_POSITION, DEFAULT_MONEY, WIN_PRIZE, PULL_COST,
+    MONEY_MESSAGES_FONT, PRIZE_MESSAGES_ALIGNMENT, PULL_MESSAGES_ALIGNMENT,
+    PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION,
+    PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION
 )
 
 
@@ -34,8 +37,8 @@ class Money(Turtle):
         self.pull_cost: int = PULL_COST
         self.color(DEFAULT_MONEY_COLOR)
         self.penup()
+        self.speed(0)
         self.hideturtle()
-        self.goto(MONEY_X_POSITION, MONEY_Y_POSITION)
         self.update_money()
 
     def __str__(self) -> str:
@@ -59,11 +62,14 @@ class Money(Turtle):
     def update_money(self) -> None:
         """Update the display of money on the screen."""
         self.clear()
+        self.goto(MONEY_X_POSITION, MONEY_Y_POSITION)
         if self.money < self.pull_cost:
             self.color(LOW_MONEY_COLOR)
         else:
             self.color(DEFAULT_MONEY_COLOR)
         self.write(f"Money: {self.money}", align=MONEY_ALIGNMENT, font=MONEY_FONT)
+        self.show_pull_cost()
+        self.show_win_prize()
 
     def increase_money(self, amount: int) -> None:
         """
@@ -82,6 +88,22 @@ class Money(Turtle):
             amount (int): The amount to decrease the money by.
         """
         self.money -= amount
+
+    def show_win_prize(self) -> None:
+        """
+        Display the current win prize on the screen.
+        """
+        self.goto(PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION)
+        self.write(f"Win prize: {self.get_win_prize()}",
+                   align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+
+    def show_pull_cost(self) -> None:
+        """
+        Display the current pull cost on the screen.
+        """
+        self.goto(PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION)
+        self.write(f"Pull cost: {self.get_pull_cost()}",
+                   align=PULL_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def get_win_prize(self) -> int:
         """

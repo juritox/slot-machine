@@ -74,11 +74,18 @@ HOW_TO_EXIT: str = "Press Escape to exit the game."
 HOW_TO_EXIT_FONT: tuple[str, int, str] = ("Arial", 14, "normal")
 
 # Messages configuration
-MESSAGES_ALIGNMENT: str = "center"
-MESSAGES_FONT: tuple[str, int, str] = ("Arial", 25, "bold")
+MAIN_MESSAGES_ALIGNMENT: str = "center"
+MAIN_MESSAGES_FONT: tuple[str, int, str] = ("Arial", 25, "bold")
 MESSAGES_COLOR: str = "white"
-MESSAGES_X_POSITION: int = 0
-MESSAGES_Y_POSITION: int = 280
+MAIN_MESSAGES_X_POSITION: int = 0
+MAIN_MESSAGES_Y_POSITION: int = 280
+MONEY_MESSAGES_FONT: tuple[str, int, str] = ("Arial", 14, "normal")
+PRIZE_MESSAGES_ALIGNMENT: str = "right"
+PRIZE_MESSAGES_X_POSITION: int = 380
+PRIZE_MESSAGES_Y_POSITION: int = 370
+PULL_MESSAGES_ALIGNMENT: str = "left"
+PULL_MESSAGES_X_POSITION: int = -390
+PULL_MESSAGES_Y_POSITION: int = 370
 
 # Logger configuration
 LOGGER_ON: bool = True
