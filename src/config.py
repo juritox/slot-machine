@@ -50,7 +50,7 @@ JACKPOT_WINNING_NUMBER: int = 7  # Must be included in SLOT_NUMBERS list
 JACKPOT_PRIZE_MULTIPLIER: int = 100
 JACKPOT_COLOR: str = "orange"
 JACKPOT_X_POSITION: int = 380
-JACKPOT_Y_POSITION: int = -380
+JACKPOT_Y_POSITION: int = -360
 
 # Game logic
 MIN_PULL_CYCLES: int = 10  # Must be at least 1 and not greater than MAX_PULL_CYCLES

@@ -124,18 +124,32 @@ class Money(Turtle):
         If jackpot is disabled then it shows "JACKPOT DISABLED" instead.
         """
         self.goto(JACKPOT_X_POSITION, JACKPOT_Y_POSITION)
-        if self.jackpot_enabled:
-            if self.symbols_used:
-                self.write(f"Jackpot symbol: {self.get_jackpot_winning_symbol()}"
-                           f"\nJackpot multiplier: {self.get_jackpot_multiplier()}",
-                           align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
-            else:
-                self.write(f"Jackpot number: {self.get_jackpot_winning_number()}"
-                           f"\nJackpot multiplier: {self.get_jackpot_multiplier()}",
-                           align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+
+        # Define larger font size for the jackpot message
+        large_font_size = MONEY_MESSAGES_FONT[1] * 2
+        large_font = (MONEY_FONT[0], large_font_size, MONEY_FONT[2])
+        # Define spacing for moving to a new line
+        line_spacing = large_font_size / 2 + large_font_size / 4
+
+        if not self.jackpot_enabled:
+            self.write("JACKPOT DISABLED", align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+            return
+
+        # Determine the jackpot text and label based on symbols_used
+        if self.symbols_used:
+            symbol_or_number = self.get_jackpot_winning_symbol()
+            jackpot_label = "Jackpot symbol:"
         else:
-            self.write("\nJACKPOT DISABLED",
-                       align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+            symbol_or_number = self.get_jackpot_winning_number()
+            jackpot_label = "Jackpot number:"
+
+        # Display the jackpot text in a larger font
+        self.write(symbol_or_number, align=PRIZE_MESSAGES_ALIGNMENT, font=large_font)
+        # Move to a new line for the rest of the text
+        self.goto(JACKPOT_X_POSITION, JACKPOT_Y_POSITION - line_spacing)
+        # Display the jackpot information in the original font
+        jackpot_info = f"{jackpot_label} \nJackpot multiplier: {self.get_jackpot_multiplier()}"
+        self.write(jackpot_info, align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def get_win_prize(self) -> int:
         """
