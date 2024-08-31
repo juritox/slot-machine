@@ -7,7 +7,8 @@ the required criteria for the game to function correctly.
 
 from config import (
     NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
-    SLOT_SYMBOLS, SLOT_NUMBERS, JACKPOT_WINNING_SYMBOL, JACKPOT_WINNING_NUMBER
+    SLOT_SYMBOLS, SLOT_NUMBERS, JACKPOT_WINNING_SYMBOL, JACKPOT_WINNING_NUMBER,
+    PULL_COST, WIN_PRIZE
 )
 
 
@@ -33,6 +34,8 @@ def validate_configurations() -> None:
         errors.append("MAX_PULL_CYCLES must not be greater than 100.")
     if MIN_PULL_CYCLES > MAX_PULL_CYCLES:
         errors.append("MIN_PULL_CYCLES must not be greater than MAX_PULL_CYCLES.")
+    if WIN_PRIZE < PULL_COST * 2:
+        errors.append("WIN_PRIZE must be at least twice as big as PULL_COST.")
 
     # Validate SLOT_SYMBOLS
     for i, symbol in enumerate(SLOT_SYMBOLS):

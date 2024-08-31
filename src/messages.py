@@ -48,7 +48,7 @@ class Messages(Turtle):
         """
         self.clear()
         self.goto(MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION)
-        self.write(f"You  won {won_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
+        self.write(f"You  won ${won_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
 
     def player_lost_message(self, lost_amount: int) -> None:
         """
@@ -59,7 +59,7 @@ class Messages(Turtle):
         """
         self.clear()
         self.goto(MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION)
-        self.write(f"You lost {lost_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
+        self.write(f"You lost ${lost_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
 
     def player_won_jackpot_message(self, won_amount: int) -> None:
         """
@@ -71,7 +71,7 @@ class Messages(Turtle):
         self.clear()
         self.goto(MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION)
         self.color(JACKPOT_COLOR)
-        self.write(f"JACKPOT: {won_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
+        self.write(f"JACKPOT: ${won_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
         self.color(MESSAGES_COLOR)
 
     def remove_messages(self) -> None:

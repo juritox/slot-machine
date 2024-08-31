@@ -174,6 +174,9 @@ class Machine:
         self.processing = True
 
         try:
+            pull_cost = self.money.get_pull_cost()
+            self.money.decrease_money(pull_cost)
+
             pull_cycles = randint(MIN_PULL_CYCLES, MAX_PULL_CYCLES)
             self.logger.log(f"Starting pull sequence with {pull_cycles} cycles.")
             self.instructions.hide_instructions()
@@ -190,23 +193,21 @@ class Machine:
                     if self.check_jackpot():
                         jackpot_prize = self.money.get_win_prize() * self.money.get_jackpot_multiplier()
                         self.money.increase_money(jackpot_prize)
-                        self.messages.player_won_jackpot_message(jackpot_prize)
-                        self.logger.log(f"Player won a jackpot! Prize: {jackpot_prize}")
+                        self.messages.player_won_jackpot_message(jackpot_prize - pull_cost)
+                        self.logger.log(f"Player won a jackpot! Prize: ${jackpot_prize - pull_cost}")
                     else:
                         win_prize = self.money.get_win_prize()
                         self.money.increase_money(win_prize)
-                        self.messages.player_won_message(win_prize)
-                        self.logger.log(f"Player won! Prize: {win_prize}")
+                        self.messages.player_won_message(win_prize - pull_cost)
+                        self.logger.log(f"Player won! Prize: ${win_prize - pull_cost}")
                 else:
                     win_prize = self.money.get_win_prize()
                     self.money.increase_money(win_prize)
-                    self.messages.player_won_message(win_prize)
-                    self.logger.log(f"Player won! Prize: {win_prize}")
+                    self.messages.player_won_message(win_prize - pull_cost)
+                    self.logger.log(f"Player won! Prize: ${win_prize - pull_cost}")
             else:
-                pull_cost = self.money.get_pull_cost()
-                self.money.decrease_money(self.money.get_pull_cost())
-                self.messages.player_lost_message(self.money.get_pull_cost())
-                self.logger.log(f"Player lost. Cost: {pull_cost}")
+                self.messages.player_lost_message(pull_cost)
+                self.logger.log(f"Player lost. Cost: ${pull_cost}")
 
             self.money.update_money()
             self.instructions.show_instructions()

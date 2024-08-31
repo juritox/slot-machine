@@ -69,7 +69,7 @@ LOW_MONEY_COLOR: str = "red"
 MONEY_X_POSITION: int = 0
 MONEY_Y_POSITION: int = 360
 DEFAULT_MONEY: int = 1000
-WIN_PRIZE: int = 2000
+WIN_PRIZE: int = 2000  # must be at least twice as big as PULL_COST
 PULL_COST: int = 50
 
 # Instructions configuration

@@ -79,9 +79,10 @@ class Money(Turtle):
             self.color(LOW_MONEY_COLOR)
         else:
             self.color(DEFAULT_MONEY_COLOR)
-        self.write(f"Money: {self.money}", align=MONEY_ALIGNMENT, font=MONEY_FONT)
+        self.write(f"Money: ${self.money}", align=MONEY_ALIGNMENT, font=MONEY_FONT)
         self.show_pull_cost()
         self.show_win_prize()
+        self.color(DEFAULT_MONEY_COLOR)
         self.show_jackpot()
 
     def increase_money(self, amount: int) -> None:
@@ -107,7 +108,7 @@ class Money(Turtle):
         Display the current win prize on the screen.
         """
         self.goto(PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION)
-        self.write(f"Win prize: {self.get_win_prize()}",
+        self.write(f"Win prize: ${self.get_win_prize()}",
                    align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def show_pull_cost(self) -> None:
@@ -115,7 +116,7 @@ class Money(Turtle):
         Display the current pull cost on the screen.
         """
         self.goto(PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION)
-        self.write(f"Pull cost: {self.get_pull_cost()}",
+        self.write(f"Pull cost: ${self.get_pull_cost()}",
                    align=PULL_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def show_jackpot(self) -> None:
@@ -148,7 +149,7 @@ class Money(Turtle):
         # Move to a new line for the rest of the text
         self.goto(JACKPOT_X_POSITION, JACKPOT_Y_POSITION - line_spacing)
         # Display the jackpot information in the original font
-        jackpot_info = f"{jackpot_label} \nJackpot multiplier: {self.get_jackpot_multiplier()}"
+        jackpot_info = f"{jackpot_label} \nJackpot multiplier: ×{self.get_jackpot_multiplier()}"
         self.write(jackpot_info, align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def get_win_prize(self) -> int:
