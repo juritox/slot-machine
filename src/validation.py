@@ -7,7 +7,7 @@ the required criteria for the game to function correctly.
 
 from config import (
     NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
-    SLOT_SYMBOLS
+    SLOT_SYMBOLS, SLOT_NUMBERS, JACKPOT_WINNING_SYMBOL, JACKPOT_WINNING_NUMBER
 )
 
 
@@ -38,6 +38,12 @@ def validate_configurations() -> None:
     for i, symbol in enumerate(SLOT_SYMBOLS):
         if len(symbol) > 1:
             errors.append(f"Symbol at index {i} ({symbol}) is not a single Unicode character.")
+
+    # Validate JACKPOT_WINNING_SYMBOL and JACKPOT_WINNING_NUMBER
+    if JACKPOT_WINNING_SYMBOL not in SLOT_SYMBOLS:
+        errors.append(f"Jackpot symbol {JACKPOT_WINNING_SYMBOL} is not included in slot symbols: {SLOT_SYMBOLS}.")
+    if JACKPOT_WINNING_NUMBER not in SLOT_NUMBERS:
+        errors.append(f"Jackpot number {JACKPOT_WINNING_NUMBER} is not included in slot numbers: {SLOT_NUMBERS}.")
 
     if errors:
         error_message = "\n".join(errors) + "\n\nPlease update config.py to correct these issues."

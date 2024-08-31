@@ -163,6 +163,10 @@ class Machine:
         and updates the player's money accordingly.
         """
         self.logger.log("Starting a pull sequence.")
+        if self.money.get_jackpot_enabled():
+            self.logger.log("Jackpot is enabled.")
+        else:
+            self.logger.log("Jackpot is disabled.")
         if self.processing:
             self.logger.log("Pull attempted while machine is still processing.")
             return
@@ -182,10 +186,22 @@ class Machine:
                 self.logger.log(f"Pull cycle {cycle + 1} completed.")
 
             if self.check_winning():
-                win_prize = self.money.get_win_prize()
-                self.money.increase_money(self.money.get_win_prize())
-                self.messages.player_won_message(self.money.get_win_prize())
-                self.logger.log(f"Player won! Prize: {win_prize}")
+                if self.money.get_jackpot_enabled():
+                    if self.check_jackpot():
+                        jackpot_prize = self.money.get_win_prize() * self.money.get_jackpot_multiplier()
+                        self.money.increase_money(jackpot_prize)
+                        self.messages.player_won_jackpot_message(jackpot_prize)
+                        self.logger.log(f"Player won a jackpot! Prize: {jackpot_prize}")
+                    else:
+                        win_prize = self.money.get_win_prize()
+                        self.money.increase_money(win_prize)
+                        self.messages.player_won_message(win_prize)
+                        self.logger.log(f"Player won! Prize: {win_prize}")
+                else:
+                    win_prize = self.money.get_win_prize()
+                    self.money.increase_money(win_prize)
+                    self.messages.player_won_message(win_prize)
+                    self.logger.log(f"Player won! Prize: {win_prize}")
             else:
                 pull_cost = self.money.get_pull_cost()
                 self.money.decrease_money(self.money.get_pull_cost())
@@ -214,3 +230,20 @@ class Machine:
                 return False
         self.logger.log(f"All slots matched! Slot values: {[slot.get_value() for slot in self.main_slots]}")
         return True
+
+    def check_jackpot(self) -> bool:
+        """
+        Check if the current slot configuration is a jackpot winning one.
+
+        Returns:
+            bool: True if all slots have the same value and the value is also a jackpot value, False otherwise.
+        """
+        first_slot_value = self.main_slots[0].get_value()
+        jackpot_value = (self.money.get_jackpot_winning_symbol()
+                         if self.money.get_symbols_used()
+                         else self.money.get_jackpot_winning_number())
+
+        is_jackpot = first_slot_value == jackpot_value
+        self.logger.log(f"Jackpot {"matched" if is_jackpot else "not matched"}. "
+                        f"Jackpot value: {jackpot_value}")
+        return is_jackpot

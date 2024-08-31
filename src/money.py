@@ -11,8 +11,10 @@ from config import (
     MONEY_ALIGNMENT, MONEY_FONT, DEFAULT_MONEY_COLOR, LOW_MONEY_COLOR,
     MONEY_X_POSITION, MONEY_Y_POSITION, DEFAULT_MONEY, WIN_PRIZE, PULL_COST,
     MONEY_MESSAGES_FONT, PRIZE_MESSAGES_ALIGNMENT, PULL_MESSAGES_ALIGNMENT,
-    PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION,
-    PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION
+    PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION, USE_SYMBOLS,
+    PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION, JACKPOT_ENABLED,
+    JACKPOT_WINNING_SYMBOL, JACKPOT_WINNING_NUMBER, JACKPOT_PRIZE_MULTIPLIER,
+    JACKPOT_X_POSITION, JACKPOT_Y_POSITION
 )
 
 
@@ -21,12 +23,17 @@ class Money(Turtle):
     Represents the money display and management for the slot machine.
 
     This class extends the Turtle class to provide graphical representation
-    and manages the player's money, win prize, and pull cost.
+    and manages the player's money, win prize, pull cost and jackpot.
 
     Attributes:
         money (int): The current amount of money the player has.
         win_prize (int): The amount of money won for a successful pull.
         pull_cost (int): The cost of each pull.
+        symbols_used (bool): Flag signaling if symbols are used in slots, otherwise numbers are used.
+        jackpot_enabled (bool): Flag signaling if jackpot is enabled or disabled.
+        jackpot_multiplier (int): Number by which the prize would be multiplied if jackpot is hit.
+        jackpot_winning_symbol (str): Jackpot winning symbol if slots are using symbols.
+        jackpot_winning_number (int): Jackpot winning number if slots are using numbers.
     """
 
     def __init__(self) -> None:
@@ -35,6 +42,11 @@ class Money(Turtle):
         self.money: int = DEFAULT_MONEY
         self.win_prize: int = WIN_PRIZE
         self.pull_cost: int = PULL_COST
+        self.symbols_used: bool = USE_SYMBOLS
+        self.jackpot_enabled: bool = JACKPOT_ENABLED
+        self.jackpot_multiplier: int = JACKPOT_PRIZE_MULTIPLIER
+        self.jackpot_winning_symbol: str = JACKPOT_WINNING_SYMBOL
+        self.jackpot_winning_number: int = JACKPOT_WINNING_NUMBER
         self.color(DEFAULT_MONEY_COLOR)
         self.penup()
         self.speed(0)
@@ -70,6 +82,7 @@ class Money(Turtle):
         self.write(f"Money: {self.money}", align=MONEY_ALIGNMENT, font=MONEY_FONT)
         self.show_pull_cost()
         self.show_win_prize()
+        self.show_jackpot()
 
     def increase_money(self, amount: int) -> None:
         """
@@ -105,6 +118,25 @@ class Money(Turtle):
         self.write(f"Pull cost: {self.get_pull_cost()}",
                    align=PULL_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
+    def show_jackpot(self) -> None:
+        """
+        Display the jackpot symbol or number and jackpot prize multiplier on the screen.
+        If jackpot is disabled then it shows "JACKPOT DISABLED" instead.
+        """
+        self.goto(JACKPOT_X_POSITION, JACKPOT_Y_POSITION)
+        if self.jackpot_enabled:
+            if self.symbols_used:
+                self.write(f"Jackpot symbol: {self.get_jackpot_winning_symbol()}"
+                           f"\nJackpot multiplier: {self.get_jackpot_multiplier()}",
+                           align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+            else:
+                self.write(f"Jackpot number: {self.get_jackpot_winning_number()}"
+                           f"\nJackpot multiplier: {self.get_jackpot_multiplier()}",
+                           align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+        else:
+            self.write("\nJACKPOT DISABLED",
+                       align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+
     def get_win_prize(self) -> int:
         """
         Get the current win prize amount.
@@ -122,3 +154,48 @@ class Money(Turtle):
             int: The current pull cost.
         """
         return self.pull_cost
+
+    def get_symbols_used(self) -> bool:
+        """
+        Get the symbols used flag.
+
+        Returns:
+            bool: The symbols used flag.
+        """
+        return self.symbols_used
+
+    def get_jackpot_enabled(self) -> bool:
+        """
+        Get the jackpot enabled flag.
+
+        Returns:
+            bool: The jackpot enabled flag.
+        """
+        return self.jackpot_enabled
+
+    def get_jackpot_multiplier(self) -> int:
+        """
+        Get the jackpot multiplier.
+
+        Returns:
+            int: The jackpot multiplier.
+        """
+        return self.jackpot_multiplier
+
+    def get_jackpot_winning_symbol(self) -> str:
+        """
+        Get the jackpot winning symbol.
+
+        Returns:
+            str: The jackpot winning symbol.
+        """
+        return self.jackpot_winning_symbol
+
+    def get_jackpot_winning_number(self) -> int:
+        """
+        Get the jackpot winning number.
+
+        Returns:
+            int: The jackpot winning number.
+        """
+        return self.jackpot_winning_number

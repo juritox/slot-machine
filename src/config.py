@@ -43,6 +43,15 @@ SLOT_SYMBOLS: list[str] = ["🍒", "🍋", "🍊", "🍇", "🔔", "💎", "🎰
 SLOT_NUMBERS: list[int] = list(range(10))  # 0 to 9
 USE_SYMBOLS: bool = True  # Set as False to use numbers
 
+# Jackpot configuration
+JACKPOT_ENABLED: bool = True  # Set as False to disable jackpot
+JACKPOT_WINNING_SYMBOL: str = "🎰"  # Must be included in SLOT_SYMBOLS list
+JACKPOT_WINNING_NUMBER: int = 7  # Must be included in SLOT_NUMBERS list
+JACKPOT_PRIZE_MULTIPLIER: int = 100
+JACKPOT_COLOR: str = "orange"
+JACKPOT_X_POSITION: int = 380
+JACKPOT_Y_POSITION: int = -380
+
 # Game logic
 MIN_PULL_CYCLES: int = 10  # Must be at least 1 and not greater than MAX_PULL_CYCLES
 MAX_PULL_CYCLES: int = 20  # Must not be greater than 100

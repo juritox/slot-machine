@@ -6,13 +6,12 @@ of game messages and instructions to the player.
 """
 
 from turtle import Turtle
-from money import Money
 from config import (
     INSTRUCTIONS_ALIGNMENT, INSTRUCTIONS_FONT, INSTRUCTIONS_COLOR,
     INSTRUCTIONS_X_POSITION, INSTRUCTIONS_Y_POSITION,
     DEFAULT_INSTRUCTIONS, HOW_TO_EXIT, HOW_TO_EXIT_FONT,
     MAIN_MESSAGES_ALIGNMENT, MAIN_MESSAGES_FONT, MESSAGES_COLOR,
-    MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION
+    MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION, JACKPOT_COLOR
 )
 
 
@@ -61,6 +60,19 @@ class Messages(Turtle):
         self.clear()
         self.goto(MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION)
         self.write(f"You lost {lost_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
+
+    def player_won_jackpot_message(self, won_amount: int) -> None:
+        """
+        Display a message indicating the player has won a jackpot.
+
+        Args:
+            won_amount (int): The amount of money the player won from jackpot.
+        """
+        self.clear()
+        self.goto(MAIN_MESSAGES_X_POSITION, MAIN_MESSAGES_Y_POSITION)
+        self.color(JACKPOT_COLOR)
+        self.write(f"JACKPOT: {won_amount}!", align=MAIN_MESSAGES_ALIGNMENT, font=MAIN_MESSAGES_FONT)
+        self.color(MESSAGES_COLOR)
 
     def remove_messages(self) -> None:
         """Clear all messages from the screen."""
