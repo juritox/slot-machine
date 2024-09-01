@@ -40,7 +40,7 @@ class Logger:
 
         # Get the project root directory
         project_root = path.dirname(path.abspath(__file__))
-        log_directory = path.join(project_root, LOG_DIRECTORY)
+        log_directory = path.join(project_root, log_directory)
 
         # Ensure the log directory exists
         if logger_on and not path.exists(log_directory):
@@ -115,10 +115,11 @@ class Logger:
         """
         if self.logger_on:
             timestamp = strftime('%Y-%m-%d %H:%M:%S', localtime())
-            arg_str = ', '.join(map(str, args))
-            kwarg_str = ', '.join(f"{key}={value}" for key, value in kwargs.items())
-            log_message = (f"{timestamp} - {function_name}(args={arg_str}, "
-                           f"kwargs={{{kwarg_str}}}): {message} - Return value: {return_value}\n")
+            arg_str = ', '.join(repr(arg) for arg in args)
+            kwarg_str = ', '.join(f"{key}={repr(value)}" for key, value in kwargs.items())
+            log_message = (f"{timestamp} - {function_name}(args=({arg_str}), "
+                           f"kwargs={{{kwarg_str}}}): {message} "
+                           f"Return value: {repr(return_value)}\n")
 
             with open(self.log_file, mode="a", encoding="utf-8") as log_file:
                 log_file.write(log_message)
@@ -140,7 +141,7 @@ def loggable(get_logger: Callable) -> Callable:
             logger = get_logger(*args, **kwargs)
             logger.log(f"Calling {func.__name__}", func.__name__, args=args, kwargs=kwargs)
             result = func(*args, **kwargs)
-            logger.log(f"Function '{func.__name__}' returned {result}", func.__name__, str(result), args, kwargs)
+            logger.log(f"Function '{func.__name__}' returned", func.__name__, result, args, kwargs)
             return result
         return wrapper
     return decorator

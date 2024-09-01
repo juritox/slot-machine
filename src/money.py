@@ -141,7 +141,7 @@ class Money(Turtle):
             symbol_or_number = self.get_jackpot_winning_symbol()
             jackpot_label = "Jackpot symbol:"
         else:
-            symbol_or_number = self.get_jackpot_winning_number()
+            symbol_or_number = str(self.get_jackpot_winning_number())
             jackpot_label = "Jackpot number:"
 
         # Display the jackpot text in a larger font
