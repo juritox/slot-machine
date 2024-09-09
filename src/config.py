@@ -102,4 +102,5 @@ LOGGER_SIMPLE_MODE: bool = True  # Set as False to use detailed log mode
 LOG_DIRECTORY: str = "../logs"  # Directory to store logs
 
 # Icon configuration
-ICON_PATH: str = "../assets/icons/slot_machine_logo.ico"
+ICON_FILE_PNG: str = "slot_machine_logo.png"
+ICON_FILE_ICO: str = "slot_machine_logo.ico"

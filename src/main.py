@@ -6,7 +6,9 @@ and starts the main game loop.
 """
 
 
-from sys import exit
+import sys
+import os
+from tkinter import PhotoImage
 from turtle import Screen, mainloop
 from typing import NoReturn, TypeVar
 from machine import Machine
@@ -16,7 +18,7 @@ from logger import Logger
 from validation import validate_configurations
 from config import (
     SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BG_COLOR,
-    KEY_TO_PULL, KEY_TO_EXIT, ICON_PATH
+    KEY_TO_PULL, KEY_TO_EXIT, ICON_FILE_PNG, ICON_FILE_ICO
 )
 
 # Define a type variable for Screen
@@ -47,6 +49,27 @@ def play(screen: ScreenType, machine: Machine) -> None:
     screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)  # type: ignore
 
 
+def set_icon(screen):
+    """
+    Set the application icon in a cross-platform manner.
+    """
+    root = screen.getcanvas().winfo_toplevel()
+
+    # Determine the correct path whether running as .py or .pyw
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    icons_path = os.path.join(base_path, "..", "assets", "icons")
+
+    if sys.platform == "win32":
+        # For Windows
+        icon_path = os.path.join(icons_path, ICON_FILE_ICO)
+        root.iconbitmap(default=icon_path)
+    else:
+        # For Linux and other platforms
+        icon_path = os.path.join(icons_path, ICON_FILE_PNG)
+        icon = PhotoImage(file=icon_path)
+        root.iconphoto(True, icon)
+
+
 def main() -> None:
     """
     Initialize the slot machine game and start the main loop.
@@ -58,15 +81,14 @@ def main() -> None:
         validate_configurations()
     except ValueError as e:
         print(f"Configuration Error:\n{e}")
-        exit(1)  # Terminate the program immediately
+        sys.exit(1)  # Terminate the program immediately
 
     screen = Screen()
     screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
     screen.bgcolor(SCREEN_BG_COLOR)
     screen.title(SCREEN_TITLE)
 
-    window = screen.getcanvas().winfo_toplevel()
-    window.iconbitmap(ICON_PATH)
+    set_icon(screen)
 
     screen.tracer(0)
 
