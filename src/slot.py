@@ -8,7 +8,7 @@ and manages the slot's value and position.
 from turtle import Turtle
 from typing import Optional, Union, cast
 from random import choice
-from config import (
+from config.config import (
     SLOT_ALIGNMENT, SLOT_FONT_SIZE, SLOT_FONT,
     TOP_SECONDARY_SLOT, BOTTOM_SECONDARY_SLOT,
     SLOT_SYMBOLS, SLOT_NUMBERS, USE_SYMBOLS

@@ -13,7 +13,7 @@ from os import path, makedirs
 from time import strftime, localtime
 from functools import wraps
 from typing import Callable, Union, Any, Optional
-from config import LOGGER_ON, LOGGER_SIMPLE_MODE, LOG_DIRECTORY
+from config.config import LOGGER_ON, LOGGER_SIMPLE_MODE, LOG_DIRECTORY
 
 
 class Logger:
@@ -47,7 +47,7 @@ class Logger:
             makedirs(log_directory)
 
         timestamp = strftime('%Y%m%d_%H%M%S', localtime())
-        self.log_file: str = path.join(log_directory, f"log_{timestamp}.txt")
+        self.log_file: str = path.join(log_directory, f"log_{timestamp}.log")
 
     def __str__(self) -> str:
         """

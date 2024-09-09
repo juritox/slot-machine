@@ -6,7 +6,7 @@ of game messages and instructions to the player.
 """
 
 from turtle import Turtle
-from config import (
+from config.config import (
     INSTRUCTIONS_ALIGNMENT, INSTRUCTIONS_FONT, INSTRUCTIONS_COLOR,
     INSTRUCTIONS_X_POSITION, INSTRUCTIONS_Y_POSITION,
     DEFAULT_INSTRUCTIONS, HOW_TO_EXIT, HOW_TO_EXIT_FONT,

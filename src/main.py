@@ -12,9 +12,9 @@ from messages import Instructions, Messages
 from money import Money
 from logger import Logger
 from validation import validate_configurations
-from config import (
+from config.config import (
     SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BG_COLOR,
-    KEY_TO_PULL, KEY_TO_EXIT
+    KEY_TO_PULL, KEY_TO_EXIT, ICON_PATH
 )
 
 # Define a type variable for Screen
@@ -62,6 +62,9 @@ def main() -> None:
     screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
     screen.bgcolor(SCREEN_BG_COLOR)
     screen.title(SCREEN_TITLE)
+
+    window = screen.getcanvas().winfo_toplevel()
+    window.iconbitmap(ICON_PATH)
 
     screen.tracer(0)
 

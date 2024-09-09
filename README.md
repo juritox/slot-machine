@@ -12,9 +12,9 @@ This project showcases:
 - **Logging:** Logs game actions and outcomes to text files in simple or detailed mode.
 
 ## Game Showcase
-![Slot Machine](docs/slot_machine_screenshot_symbols.png)
+![Slot Machine](assets/screenshots/slot_machine_screenshot_symbols.png)
 
-![Slot Machine](docs/slot_machine_screenshot_numbers.png)
+![Slot Machine](assets/screenshots/slot_machine_screenshot_numbers.png)
 
 ## Installation Instructions
 
@@ -50,7 +50,7 @@ git clone https://github.com/juritox/slot-machine.git
 
 ### Modifying Game Settings
 
-- To customize how the game operates and adjust its basic settings, you can modify the `config.py` file located in the `src` directory.
+- To customize how the game operates and adjust its basic settings, you can modify the `config.py` file located in the `config` directory.
 
 - **Validation:** Some values in `config.py` are validated when starting the game to ensure they are not set incorrectly. Any errors or issues will be logged to the console.
 

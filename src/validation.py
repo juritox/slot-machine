@@ -5,7 +5,7 @@ It includes functions to validate various game settings and ensure they meet
 the required criteria for the game to function correctly.
 """
 
-from config import (
+from config.config import (
     NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
     SLOT_SYMBOLS, SLOT_NUMBERS, JACKPOT_WINNING_SYMBOL, JACKPOT_WINNING_NUMBER,
     PULL_COST, WIN_PRIZE

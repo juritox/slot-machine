@@ -12,7 +12,7 @@ from money import Money
 from messages import Instructions, Messages
 from logger import Logger, loggable
 from random import randint
-from config import (
+from config.config import (
     DEFAULT_SLOT_SIZE, NUMBER_OF_SLOTS, SLOT_SHAPE,
     VERTICAL_SHAPE_STRETCH, HORIZONTAL_SHAPE_STRETCH, OUTLINE_SIZE,
     STARTING_Y_POSITION, TOP_SECONDARY_SLOT, BOTTOM_SECONDARY_SLOT,

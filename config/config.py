@@ -100,3 +100,6 @@ PULL_MESSAGES_Y_POSITION: int = 370
 LOGGER_ON: bool = True
 LOGGER_SIMPLE_MODE: bool = True  # Set as False to use detailed log mode
 LOG_DIRECTORY: str = "../logs"  # Directory to store logs
+
+# Icon configuration
+ICON_PATH: str = "../assets/icons/slot_machine_logo.ico"
