@@ -13,7 +13,7 @@ from os import path, makedirs
 from time import strftime, localtime
 from functools import wraps
 from typing import Callable, Union, Any, Optional
-from config.config import LOGGER_ON, LOGGER_SIMPLE_MODE, LOG_DIRECTORY
+from config import LOGGER_ON, LOGGER_SIMPLE_MODE, LOG_DIRECTORY
 
 
 class Logger:

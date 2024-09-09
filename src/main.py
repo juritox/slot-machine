@@ -5,6 +5,8 @@ It initializes the game, sets up the screen, creates the necessary objects,
 and starts the main game loop.
 """
 
+
+from sys import exit
 from turtle import Screen, mainloop
 from typing import NoReturn, TypeVar
 from machine import Machine
@@ -12,7 +14,7 @@ from messages import Instructions, Messages
 from money import Money
 from logger import Logger
 from validation import validate_configurations
-from config.config import (
+from config import (
     SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, SCREEN_BG_COLOR,
     KEY_TO_PULL, KEY_TO_EXIT, ICON_PATH
 )

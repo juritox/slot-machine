@@ -7,7 +7,7 @@ decreasing the money amount.
 """
 
 from turtle import Turtle
-from config.config import (
+from config import (
     MONEY_ALIGNMENT, MONEY_FONT, DEFAULT_MONEY_COLOR, LOW_MONEY_COLOR,
     MONEY_X_POSITION, MONEY_Y_POSITION, DEFAULT_MONEY, WIN_PRIZE, PULL_COST,
     MONEY_MESSAGES_FONT, PRIZE_MESSAGES_ALIGNMENT, PULL_MESSAGES_ALIGNMENT,
