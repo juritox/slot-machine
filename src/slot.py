@@ -6,13 +6,16 @@ and manages the slot's value and position.
 """
 
 from turtle import Turtle
-from typing import Optional, Union, cast
+from typing import TypeAlias
 from random import choice
 from config import (
     SLOT_ALIGNMENT, SLOT_FONT_SIZE, SLOT_FONT,
     TOP_SECONDARY_SLOT, BOTTOM_SECONDARY_SLOT,
     SLOT_SYMBOLS, SLOT_NUMBERS, USE_SYMBOLS
 )
+
+# Define a type alias for slot value
+SlotValue: TypeAlias = str | int
 
 
 class Slot(Turtle):
@@ -23,13 +26,13 @@ class Slot(Turtle):
     and manages the slot's value and position.
 
     Attributes:
-        value (Optional[Union[str, int]]): The current value displayed on the slot.
+        value (SlotValue | None): The current value displayed on the slot.
             It can be a string or an integer, or it can be None if this is a secondary slot.
-        values (list[Union[str, int]]): The possible values for this slot, which can
+        values (list[SlotValue]): The possible values for this slot, which can
             be either strings or integers.
     """
 
-    def __init__(self, x_position: float, y_position: float, color: str, secondary_slot: Union[str, None]) -> None:
+    def __init__(self, x_position: float, y_position: float, color: str, secondary_slot: str | None) -> None:
         """
         Initialize a new Slot instance.
 
@@ -37,15 +40,15 @@ class Slot(Turtle):
             x_position (float): The x-coordinate for the slot's position.
             y_position (float): The y-coordinate for the slot's position.
             color (str): The color of the slot's text.
-            secondary_slot (Union[str, None]): Indicates if this is a secondary slot and its position (top or bottom).
+            secondary_slot (str | None): Indicates if this is a secondary slot and its position (top or bottom).
                 If None is provided, this is a main slot.
         """
         super().__init__()
         self.color(color)
         self.penup()
         self.hideturtle()
-        self.values = cast(list[Union[str, int]], SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS)
-        self.value: Optional[Union[str, int]] = choice(self.values) if secondary_slot is None else None
+        self.values: list[SlotValue] = SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS  # type: ignore
+        self.value: SlotValue | None = choice(self.values) if secondary_slot is None else None
         self.goto(x_position, y_position - SLOT_FONT_SIZE / 2 - SLOT_FONT_SIZE / 4)
 
     def __str__(self) -> str:
@@ -69,16 +72,16 @@ class Slot(Turtle):
                 f"color={self.color()[0]}, "
                 f"value={self.value})")
 
-    def update_slot(self, secondary_slot: Optional[str] = None,
-                    main_slot_value: Optional[Union[str, int]] = None) -> None:
+    def update_slot(self, secondary_slot: str | None = None,
+                    main_slot_value: SlotValue | None = None) -> None:
         """
         Update the slot's display with its current value.
 
         If this is a secondary slot, it updates based on the primary slot's value.
 
         Args:
-            secondary_slot (Optional[str]): Indicates if this is a secondary slot and its position (top or bottom).
-            main_slot_value (Optional[Union[str, int]]): The value of the primary slot, if applicable.
+            secondary_slot (str | None): Indicates if this is a secondary slot and its position (top or bottom).
+            main_slot_value (SlotValue | None): The value of the primary slot, if applicable.
         """
         self.clear()
         if secondary_slot == TOP_SECONDARY_SLOT and main_slot_value is not None:
@@ -94,11 +97,11 @@ class Slot(Turtle):
         """Randomly select a new value for the slot."""
         self.value = choice(self.values)
 
-    def get_value(self) -> Optional[Union[str, int]]:
+    def get_value(self) -> SlotValue | None:
         """
         Get the current value of the slot.
 
         Returns:
-            Optional[Union[str, int]]: The current value displayed on the slot.
+            SlotValue | None: The current value displayed on the slot.
         """
         return self.value

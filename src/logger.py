@@ -12,7 +12,7 @@ of a function.
 from os import path, makedirs
 from time import strftime, localtime
 from functools import wraps
-from typing import Callable, Union, Any, Optional
+from typing import Callable, Any
 from config import LOGGER_ON, LOGGER_SIMPLE_MODE, LOG_DIRECTORY
 
 
@@ -67,17 +67,17 @@ class Logger:
         """
         return f"Logger(log_file='{self.log_file}', logger_on={self.logger_on}, simple_mode={self.simple_mode})"
 
-    def log(self, message: str, function_name: str = "", return_value: Optional[str] = None,
-            args: tuple = (), kwargs: Optional[dict[str, Any]] = None) -> None:
+    def log(self, message: str, function_name: str = "", return_value: str | None = None,
+            args: tuple = (), kwargs: dict[str, Any] | None = None) -> None:
         """
         Log a message using the appropriate logging mode.
 
         Args:
             message (str): The message to be logged.
             function_name (str): The name of the function being logged (optional).
-            return_value (Optional[str]): The return value of the function being logged (optional).
+            return_value (str | None): The return value of the function being logged (optional).
             args (tuple): The arguments passed to the function being logged (optional).
-            kwargs (Optional[dict[str, Any]]): The keyword arguments passed to the function being logged (optional).
+            kwargs (dict[str, Any] | None): The keyword arguments passed to the function being logged (optional).
         """
         if kwargs is None:
             kwargs = {}
@@ -101,7 +101,7 @@ class Logger:
             with open(self.log_file, mode="a", encoding="utf-8") as log_file:
                 log_file.write(log_message)
 
-    def _log_detailed(self, message: str, function_name: str, return_value: Union[str, None],
+    def _log_detailed(self, message: str, function_name: str, return_value: str | None,
                       args: tuple, kwargs: dict[str, Any]) -> None:
         """
         Log a message in detailed mode.
@@ -109,7 +109,7 @@ class Logger:
         Args:
             message (str): The message to be logged.
             function_name (str): The name of the function being logged.
-            return_value (Union[str, None]): The return value of the function being logged.
+            return_value (str | None): The return value of the function being logged.
             args (tuple): The arguments passed to the function being logged.
             kwargs (dict[str, Any]): The keyword arguments passed to the function being logged.
         """

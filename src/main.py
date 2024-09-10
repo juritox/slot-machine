@@ -10,7 +10,7 @@ import sys
 import os
 from tkinter import PhotoImage
 from turtle import Screen, mainloop
-from typing import NoReturn, TypeVar
+from typing import TypeAlias, NoReturn
 from machine import Machine
 from messages import Instructions, Messages
 from money import Money
@@ -21,8 +21,8 @@ from config import (
     KEY_TO_PULL, KEY_TO_EXIT, ICON_FILE_PNG, ICON_FILE_ICO
 )
 
-# Define a type variable for Screen
-ScreenType = TypeVar('ScreenType', bound=Screen)  # type: ignore
+# Define a type alias for Screen
+ScreenType: TypeAlias = Screen  # type: ignore
 
 
 def exit_program(screen: ScreenType) -> NoReturn:
@@ -33,7 +33,7 @@ def exit_program(screen: ScreenType) -> NoReturn:
         screen (Screen): The turtle screen to close.
     """
     screen.bye()  # type: ignore
-    raise SystemExit
+    sys.exit()
 
 
 def play(screen: ScreenType, machine: Machine) -> None:

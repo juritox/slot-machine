@@ -6,7 +6,6 @@ and determines winning conditions.
 """
 
 from turtle import Turtle
-from typing import Optional
 from random import randint
 from slot import Slot
 from money import Money
@@ -108,7 +107,7 @@ class Machine:
             self.add_slot(starting_x_position + slot * slot_width, STARTING_Y_POSITION, MAIN_SLOT_DISPLAY_COLOR)
 
     @loggable(lambda self, *args, **kwargs: self.logger)
-    def add_slot(self, x_position: float, y_position: float, color: str, secondary_slot: Optional[str] = None) -> None:
+    def add_slot(self, x_position: float, y_position: float, color: str, secondary_slot: str | None = None) -> None:
         """
         Add a slot to the machine.
 
@@ -116,7 +115,7 @@ class Machine:
             x_position (float): The x-coordinate for the slot's position.
             y_position (float): The y-coordinate for the slot's position.
             color (str): The color of the slot's text.
-            secondary_slot (Optional[str]): Indicates if this is a secondary slot and its position (top or bottom).
+            secondary_slot (str | None): Indicates if this is a secondary slot and its position (top or bottom).
         """
         self.logger.log(f"Adding a slot at ({x_position}, {y_position}) "
                         f"with color {color} and secondary slot type {secondary_slot}")
