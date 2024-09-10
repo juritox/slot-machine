@@ -50,7 +50,7 @@ git clone https://github.com/juritox/slot-machine.git
 
 ### Modifying Game Settings
 
-- To customize how the game operates and adjust its basic settings, you can modify the `config.py` file located in the `config` directory.
+- To customize how the game operates and adjust its basic settings, you can modify the `config.py` file located in the `src` directory.
 
 - **Validation:** Some values in `config.py` are validated when starting the game to ensure they are not set incorrectly. Any errors or issues will be logged to the console.
 
