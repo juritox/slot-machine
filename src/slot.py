@@ -26,9 +26,9 @@ class Slot(Turtle):
     and manages the slot's value and position.
 
     Attributes:
-        value (SlotValue | None): The current value displayed on the slot.
+        _value (SlotValue | None): The current value displayed on the slot.
             It can be a string or an integer, or it can be None if this is a secondary slot.
-        values (list[SlotValue]): The possible values for this slot, which can
+        _values (list[SlotValue]): The possible values for this slot, which can
             be either strings or integers.
     """
 
@@ -47,8 +47,8 @@ class Slot(Turtle):
         self.color(color)
         self.penup()
         self.hideturtle()
-        self.values: list[SlotValue] = SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS  # type: ignore
-        self.value: SlotValue | None = choice(self.values) if secondary_slot is None else None
+        self._values: list[SlotValue] = SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS  # type: ignore
+        self._value: SlotValue | None = choice(self._values) if secondary_slot is None else None
         self.goto(x_position, y_position - SLOT_FONT_SIZE / 2 - SLOT_FONT_SIZE / 4)
 
     def __str__(self) -> str:
@@ -72,6 +72,38 @@ class Slot(Turtle):
                 f"color={self.color()[0]}, "
                 f"value={self.value})")
 
+    @property
+    def value(self) -> SlotValue | None:
+        """
+        Get the current value of the slot.
+
+        Returns:
+            SlotValue | None: The current value displayed on the slot.
+        """
+        return self._value
+
+    @value.setter
+    def value(self, new_value: SlotValue | None) -> None:
+        """
+        Set the current value of the slot.
+
+        Args:
+            new_value (SlotValue | None): The new value to display on the slot. If None, the slot is a secondary one.
+        """
+        if new_value is not None and new_value not in self._values:
+            raise ValueError("Invalid slot value")
+        self._value = new_value
+
+    @property
+    def values(self) -> list[SlotValue]:
+        """
+        Get the possible values for the slot.
+
+        Returns:
+            list[SlotValue]: A copy of the list of possible values for the slot.
+        """
+        return self._values.copy()  # Return a copy to prevent direct modification
+
     def update_slot(self, secondary_slot: str | None = None,
                     main_slot_value: SlotValue | None = None) -> None:
         """
@@ -85,23 +117,16 @@ class Slot(Turtle):
         """
         self.clear()
         if secondary_slot == TOP_SECONDARY_SLOT and main_slot_value is not None:
-            index = (self.values.index(main_slot_value) + 1) % len(self.values)
-            self.value = self.values[index]
+            index = (self._values.index(main_slot_value) + 1) % len(self._values)
+            self._value = self._values[index]
         elif secondary_slot == BOTTOM_SECONDARY_SLOT and main_slot_value is not None:
-            index = (self.values.index(main_slot_value) - 1) % len(self.values)
-            self.value = self.values[index]
-        if self.value is not None:
-            self.write(f"{self.value}", align=SLOT_ALIGNMENT, font=SLOT_FONT)
+            index = (self._values.index(main_slot_value) - 1) % len(self._values)
+            self._value = self._values[index]
+        if self._value is not None:
+            self.write(f"{self._value}", align=SLOT_ALIGNMENT, font=SLOT_FONT)
 
     def randomize_slot(self) -> None:
-        """Randomly select a new value for the slot."""
-        self.value = choice(self.values)
-
-    def get_value(self) -> SlotValue | None:
         """
-        Get the current value of the slot.
-
-        Returns:
-            SlotValue | None: The current value displayed on the slot.
+        Randomly select a new value for the slot.
         """
-        return self.value
+        self.value = choice(self._values)

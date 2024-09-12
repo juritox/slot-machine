@@ -64,7 +64,7 @@ class Machine:
         Returns:
             str: A string showing the current state of the main slots.
         """
-        slot_values = [slot.get_value() for slot in self.main_slots]
+        slot_values = [slot.value for slot in self.main_slots]
         return f"Machine: {slot_values}"
 
     def __repr__(self) -> str:
@@ -78,7 +78,9 @@ class Machine:
 
     @loggable(lambda self, *args, **kwargs: self.logger)
     def create_machine(self) -> None:
-        """Create the graphics for the slot machine with main and secondary slots."""
+        """
+        Create the graphics for the slot machine with main and secondary slots.
+        """
         self.logger.log("Creating the slot machine.")
         # Calculate the width and height of one slot
         slot_width = DEFAULT_SLOT_SIZE * HORIZONTAL_SHAPE_STRETCH
@@ -140,17 +142,19 @@ class Machine:
 
     @loggable(lambda self, *args, **kwargs: self.logger)
     def update_slots(self) -> None:
-        """Update all machine slots."""
+        """
+        Update all machine slots.
+        """
         self.logger.log("Updating all slots.")
         for slot in self.main_slots:
             slot.update_slot()
 
         for index, slot in enumerate(self.top_secondary_slots):
-            value = self.main_slots[index].get_value()
+            value = self.main_slots[index].value
             slot.update_slot(secondary_slot=TOP_SECONDARY_SLOT, main_slot_value=value)
 
         for index, slot in enumerate(self.bottom_secondary_slots):
-            value = self.main_slots[index].get_value()
+            value = self.main_slots[index].value
             slot.update_slot(secondary_slot=BOTTOM_SECONDARY_SLOT, main_slot_value=value)
 
     @loggable(lambda self, *args, **kwargs: self.logger)
@@ -162,7 +166,7 @@ class Machine:
         and updates the player's money accordingly.
         """
         self.logger.log("Starting a pull sequence.")
-        if self.money.get_jackpot_enabled():
+        if self.money.jackpot_enabled:
             self.logger.log("Jackpot is enabled.")
         else:
             self.logger.log("Jackpot is disabled.")
@@ -173,7 +177,7 @@ class Machine:
         self.processing = True
 
         try:
-            pull_cost = self.money.get_pull_cost()
+            pull_cost = self.money.pull_cost
             self.money.decrease_money(pull_cost)
 
             pull_cycles = randint(MIN_PULL_CYCLES, MAX_PULL_CYCLES)
@@ -188,19 +192,19 @@ class Machine:
                 self.logger.log(f"Pull cycle {cycle + 1} completed.")
 
             if self.check_winning():
-                if self.money.get_jackpot_enabled():
+                if self.money.jackpot_enabled:
                     if self.check_jackpot():
-                        jackpot_prize = self.money.get_win_prize() * self.money.get_jackpot_multiplier()
+                        jackpot_prize = self.money.win_prize * self.money.jackpot_multiplier
                         self.money.increase_money(jackpot_prize)
                         self.messages.player_won_jackpot_message(jackpot_prize - pull_cost)
                         self.logger.log(f"Player won a jackpot! Prize: ${jackpot_prize - pull_cost}")
                     else:
-                        win_prize = self.money.get_win_prize()
+                        win_prize = self.money.win_prize
                         self.money.increase_money(win_prize)
                         self.messages.player_won_message(win_prize - pull_cost)
                         self.logger.log(f"Player won! Prize: ${win_prize - pull_cost}")
                 else:
-                    win_prize = self.money.get_win_prize()
+                    win_prize = self.money.win_prize
                     self.money.increase_money(win_prize)
                     self.messages.player_won_message(win_prize - pull_cost)
                     self.logger.log(f"Player won! Prize: ${win_prize - pull_cost}")
@@ -225,10 +229,10 @@ class Machine:
         self.logger.log("Checking for a winning condition.")
         first_slot = self.main_slots[0]
         for slot in self.main_slots[1:]:
-            if slot.get_value() != first_slot.get_value():
-                self.logger.log(f"No match found. Slot values: {[slot.get_value() for slot in self.main_slots]}")
+            if slot.value != first_slot.value:
+                self.logger.log(f"No match found. Slot values: {[slot.value for slot in self.main_slots]}")
                 return False
-        self.logger.log(f"All slots matched! Slot values: {[slot.get_value() for slot in self.main_slots]}")
+        self.logger.log(f"All slots matched! Slot values: {[slot.value for slot in self.main_slots]}")
         return True
 
     def check_jackpot(self) -> bool:
@@ -238,10 +242,10 @@ class Machine:
         Returns:
             bool: True if all slots have the same value and the value is also a jackpot value, False otherwise.
         """
-        first_slot_value = self.main_slots[0].get_value()
-        jackpot_value = (self.money.get_jackpot_winning_symbol()
-                         if self.money.get_symbols_used()
-                         else self.money.get_jackpot_winning_number())
+        first_slot_value = self.main_slots[0].value
+        jackpot_value = (self.money.jackpot_winning_symbol
+                         if self.money.symbols_used
+                         else self.money.jackpot_winning_number)
 
         is_jackpot = first_slot_value == jackpot_value
         self.logger.log(f"Jackpot {"matched" if is_jackpot else "not matched"}. "

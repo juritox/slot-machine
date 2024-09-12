@@ -26,27 +26,29 @@ class Money(Turtle):
     and manages the player's money, win prize, pull cost and jackpot.
 
     Attributes:
-        money (int): The current amount of money the player has.
-        win_prize (int): The amount of money won for a successful pull.
-        pull_cost (int): The cost of each pull.
-        symbols_used (bool): Flag signaling if symbols are used in slots, otherwise numbers are used.
-        jackpot_enabled (bool): Flag signaling if jackpot is enabled or disabled.
-        jackpot_multiplier (int): Number by which the prize would be multiplied if jackpot is hit.
-        jackpot_winning_symbol (str): Jackpot winning symbol if slots are using symbols.
-        jackpot_winning_number (int): Jackpot winning number if slots are using numbers.
+        _money (int): The current amount of money the player has.
+        _win_prize (int): The amount of money won for a successful pull.
+        _pull_cost (int): The cost of each pull.
+        _symbols_used (bool): Flag signaling if symbols are used in slots, otherwise numbers are used.
+        _jackpot_enabled (bool): Flag signaling if jackpot is enabled or disabled.
+        _jackpot_multiplier (int): Number by which the prize would be multiplied if jackpot is hit.
+        _jackpot_winning_symbol (str): Jackpot winning symbol if slots are using symbols.
+        _jackpot_winning_number (int): Jackpot winning number if slots are using numbers.
     """
 
     def __init__(self) -> None:
-        """Initialize the money with its default value and position."""
+        """
+        Initialize the money with its default value and position.
+        """
         super().__init__()
-        self.money: int = DEFAULT_MONEY
-        self.win_prize: int = WIN_PRIZE
-        self.pull_cost: int = PULL_COST
-        self.symbols_used: bool = USE_SYMBOLS
-        self.jackpot_enabled: bool = JACKPOT_ENABLED
-        self.jackpot_multiplier: int = JACKPOT_PRIZE_MULTIPLIER
-        self.jackpot_winning_symbol: str = JACKPOT_WINNING_SYMBOL
-        self.jackpot_winning_number: int = JACKPOT_WINNING_NUMBER
+        self._money: int = DEFAULT_MONEY
+        self._win_prize: int = WIN_PRIZE
+        self._pull_cost: int = PULL_COST
+        self._symbols_used: bool = USE_SYMBOLS
+        self._jackpot_enabled: bool = JACKPOT_ENABLED
+        self._jackpot_multiplier: int = JACKPOT_PRIZE_MULTIPLIER
+        self._jackpot_winning_symbol: str = JACKPOT_WINNING_SYMBOL
+        self._jackpot_winning_number: int = JACKPOT_WINNING_NUMBER
         self.color(DEFAULT_MONEY_COLOR)
         self.penup()
         self.speed(0)
@@ -60,7 +62,7 @@ class Money(Turtle):
         Returns:
             str: A string showing the current amount of money.
         """
-        return f"Money: {self.money}"
+        return f"Money: {self._money}"
 
     def __repr__(self) -> str:
         """
@@ -69,21 +71,97 @@ class Money(Turtle):
         Returns:
             str: A string representation of the Money object.
         """
-        return f"Money(money={self.money}, win_prize={self.win_prize}, pull_cost={self.pull_cost})"
+        return f"Money(money={self._money}, win_prize={self._win_prize}, pull_cost={self._pull_cost})"
 
-    def update_money(self) -> None:
-        """Update the display of money on the screen."""
-        self.clear()
-        self.goto(MONEY_X_POSITION, MONEY_Y_POSITION)
-        if self.money < self.pull_cost:
-            self.color(LOW_MONEY_COLOR)
-        else:
-            self.color(DEFAULT_MONEY_COLOR)
-        self.write(f"Money: ${self.money}", align=MONEY_ALIGNMENT, font=MONEY_FONT)
-        self.show_pull_cost()
-        self.show_win_prize()
-        self.color(DEFAULT_MONEY_COLOR)
-        self.show_jackpot()
+    @property
+    def money(self) -> int:
+        """
+        Get the current amount of money.
+
+        Returns:
+            int: The current amount of money.
+        """
+        return self._money
+
+    @money.setter
+    def money(self, new_amount: int) -> None:
+        """
+        Set the current amount of money.
+
+        Args:
+            new_amount (int): The new amount of money.
+        """
+        self._money = new_amount
+
+    @property
+    def win_prize(self) -> int:
+        """
+        Get the current win prize amount.
+
+        Returns:
+            int: The current win prize amount.
+        """
+        return self._win_prize
+
+    @property
+    def pull_cost(self) -> int:
+        """
+        Get the current pull cost.
+
+        Returns:
+            int: The current pull cost.
+        """
+        return self._pull_cost
+
+    @property
+    def symbols_used(self) -> bool:
+        """
+        Get the symbols used flag.
+
+        Returns:
+            bool: The symbols used flag.
+        """
+        return self._symbols_used
+
+    @property
+    def jackpot_enabled(self) -> bool:
+        """
+        Get the jackpot enabled flag.
+
+        Returns:
+            bool: The jackpot enabled flag.
+        """
+        return self._jackpot_enabled
+
+    @property
+    def jackpot_multiplier(self) -> int:
+        """
+        Get the jackpot multiplier.
+
+        Returns:
+            int: The jackpot multiplier.
+        """
+        return self._jackpot_multiplier
+
+    @property
+    def jackpot_winning_symbol(self) -> str:
+        """
+        Get the jackpot winning symbol.
+
+        Returns:
+            str: The jackpot winning symbol.
+        """
+        return self._jackpot_winning_symbol
+
+    @property
+    def jackpot_winning_number(self) -> int:
+        """
+        Get the jackpot winning number.
+
+        Returns:
+            int: The jackpot winning number.
+        """
+        return self._jackpot_winning_number
 
     def increase_money(self, amount: int) -> None:
         """
@@ -103,12 +181,28 @@ class Money(Turtle):
         """
         self.money -= amount
 
+    def update_money(self) -> None:
+        """
+        Update the display of money on the screen.
+        """
+        self.clear()
+        self.goto(MONEY_X_POSITION, MONEY_Y_POSITION)
+        if self.money < self.pull_cost:
+            self.color(LOW_MONEY_COLOR)
+        else:
+            self.color(DEFAULT_MONEY_COLOR)
+        self.write(f"Money: ${self.money}", align=MONEY_ALIGNMENT, font=MONEY_FONT)
+        self.show_pull_cost()
+        self.show_win_prize()
+        self.color(DEFAULT_MONEY_COLOR)
+        self.show_jackpot()
+
     def show_win_prize(self) -> None:
         """
         Display the current win prize on the screen.
         """
         self.goto(PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION)
-        self.write(f"Win prize: ${self.get_win_prize()}",
+        self.write(f"Win prize: ${self.win_prize}",
                    align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def show_pull_cost(self) -> None:
@@ -116,7 +210,7 @@ class Money(Turtle):
         Display the current pull cost on the screen.
         """
         self.goto(PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION)
-        self.write(f"Pull cost: ${self.get_pull_cost()}",
+        self.write(f"Pull cost: ${self.pull_cost}",
                    align=PULL_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def show_jackpot(self) -> None:
@@ -138,10 +232,10 @@ class Money(Turtle):
 
         # Determine the jackpot text and label based on symbols_used
         if self.symbols_used:
-            symbol_or_number = self.get_jackpot_winning_symbol()
+            symbol_or_number = self.jackpot_winning_symbol
             jackpot_label = "Jackpot symbol:"
         else:
-            symbol_or_number = str(self.get_jackpot_winning_number())
+            symbol_or_number = str(self.jackpot_winning_number)
             jackpot_label = "Jackpot number:"
 
         # Display the jackpot text in a larger font
@@ -149,68 +243,5 @@ class Money(Turtle):
         # Move to a new line for the rest of the text
         self.goto(JACKPOT_X_POSITION, JACKPOT_Y_POSITION - line_spacing)
         # Display the jackpot information in the original font
-        jackpot_info = f"{jackpot_label} \nJackpot multiplier: ×{self.get_jackpot_multiplier()}"
+        jackpot_info = f"{jackpot_label} \nJackpot multiplier: ×{self.jackpot_multiplier}"
         self.write(jackpot_info, align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
-
-    def get_win_prize(self) -> int:
-        """
-        Get the current win prize amount.
-
-        Returns:
-            int: The current win prize amount.
-        """
-        return self.win_prize
-
-    def get_pull_cost(self) -> int:
-        """
-        Get the current pull cost.
-
-        Returns:
-            int: The current pull cost.
-        """
-        return self.pull_cost
-
-    def get_symbols_used(self) -> bool:
-        """
-        Get the symbols used flag.
-
-        Returns:
-            bool: The symbols used flag.
-        """
-        return self.symbols_used
-
-    def get_jackpot_enabled(self) -> bool:
-        """
-        Get the jackpot enabled flag.
-
-        Returns:
-            bool: The jackpot enabled flag.
-        """
-        return self.jackpot_enabled
-
-    def get_jackpot_multiplier(self) -> int:
-        """
-        Get the jackpot multiplier.
-
-        Returns:
-            int: The jackpot multiplier.
-        """
-        return self.jackpot_multiplier
-
-    def get_jackpot_winning_symbol(self) -> str:
-        """
-        Get the jackpot winning symbol.
-
-        Returns:
-            str: The jackpot winning symbol.
-        """
-        return self.jackpot_winning_symbol
-
-    def get_jackpot_winning_number(self) -> int:
-        """
-        Get the jackpot winning number.
-
-        Returns:
-            int: The jackpot winning number.
-        """
-        return self.jackpot_winning_number
