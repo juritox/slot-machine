@@ -7,6 +7,7 @@ decreasing the money amount.
 """
 
 from turtle import Turtle
+from slot import get_slot_values
 from config import (
     MONEY_ALIGNMENT, MONEY_FONT, DEFAULT_MONEY_COLOR, LOW_MONEY_COLOR,
     MONEY_X_POSITION, MONEY_Y_POSITION, DEFAULT_MONEY, WIN_PRIZE, PULL_COST,
@@ -14,7 +15,8 @@ from config import (
     PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION, USE_SYMBOLS,
     PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION, JACKPOT_ENABLED,
     JACKPOT_WINNING_SYMBOL, JACKPOT_WINNING_NUMBER, JACKPOT_PRIZE_MULTIPLIER,
-    JACKPOT_X_POSITION, JACKPOT_Y_POSITION
+    JACKPOT_X_POSITION, JACKPOT_Y_POSITION, NUMBER_OF_SLOTS,
+    RTP_ALIGNMENT, RTP_X_POSITION, RTP_Y_POSITION
 )
 
 
@@ -163,6 +165,83 @@ class Money(Turtle):
         """
         return self._jackpot_winning_number
 
+    @staticmethod
+    def calculate_jackpot_chance() -> float:
+        """
+        Calculate the chance of winning a jackpot.
+
+        Returns:
+            float: The jackpot winning chance.
+        """
+        number_of_values = len(get_slot_values())
+
+        chance = 1 / (number_of_values ** NUMBER_OF_SLOTS)
+
+        return chance
+
+    @staticmethod
+    def calculate_loss_chance() -> float:
+        """
+        Calculate the chance of losing.
+        Returns:
+            float: The losing chance.
+        """
+        number_of_values = len(get_slot_values())
+
+        chance = 1 - number_of_values / (number_of_values ** NUMBER_OF_SLOTS)
+
+        return chance
+
+    @staticmethod
+    def calculate_win_chance() -> float:
+        """
+        Calculate the chance of winning (including jackpot if enabled).
+
+        Returns:
+            float: The winning chance.
+        """
+        number_of_values = len(get_slot_values())
+
+        chance = number_of_values / (number_of_values ** NUMBER_OF_SLOTS)
+
+        return chance
+
+    def calculate_regular_win_chance(self) -> float:
+        """
+        Calculate the chance of winning without hitting the jackpot.
+
+        Returns:
+            float: The regular winning chance.
+        """
+        if self.jackpot_enabled:
+            chance = self.calculate_win_chance() - self.calculate_jackpot_chance()
+        else:
+            chance = self.calculate_win_chance()
+
+        return chance
+
+    def calculate_rtp(self) -> float:
+        """
+        Calculate the Return to Player (RTP) for the slot machine.
+
+        Returns:
+            float: The RTP as a percentage.
+        """
+        if self.jackpot_enabled:
+            regular_win_chance = self.calculate_regular_win_chance()
+            jackpot_chance = self.calculate_jackpot_chance()
+            expected_regular_return = regular_win_chance * self.win_prize
+            expected_jackpot_return = jackpot_chance * self.win_prize * self.jackpot_multiplier
+            total_expected_return = expected_regular_return + expected_jackpot_return
+        else:
+            win_chance = self.calculate_win_chance()
+            total_expected_return = win_chance * self.win_prize
+
+        # RTP is the ratio of expected return to the amount bet (pull cost)
+        rtp = (total_expected_return / self.pull_cost) * 100
+
+        return rtp
+
     def increase_money(self, amount: int) -> None:
         """
         Increase the player's money by the specified amount.
@@ -196,6 +275,7 @@ class Money(Turtle):
         self.show_win_prize()
         self.color(DEFAULT_MONEY_COLOR)
         self.show_jackpot()
+        self.show_rtp()
 
     def show_win_prize(self) -> None:
         """
@@ -245,3 +325,11 @@ class Money(Turtle):
         # Display the jackpot information in the original font
         jackpot_info = f"{jackpot_label} \nJackpot multiplier: ×{self.jackpot_multiplier}"
         self.write(jackpot_info, align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
+
+    def show_rtp(self):
+        """
+        Display the current Return To Player (RPT) percentage.
+        """
+        self.goto(RTP_X_POSITION, RTP_Y_POSITION)
+        self.write(f"RTP:\n{round(self.calculate_rtp(), 2)}%",
+                   align=RTP_ALIGNMENT, font=MONEY_MESSAGES_FONT)

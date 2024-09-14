@@ -18,6 +18,15 @@ from config import (
 SlotValue: TypeAlias = str | int
 
 
+def get_slot_values() -> list[SlotValue]:
+    """
+    Get all possible slot symbols or numbers.
+    Returns:
+        SlotValue | None: All possible slot values.
+    """
+    return SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS  # type: ignore
+
+
 class Slot(Turtle):
     """
     Represents a single slot in a slot machine.
@@ -47,7 +56,7 @@ class Slot(Turtle):
         self.color(color)
         self.penup()
         self.hideturtle()
-        self._values: list[SlotValue] = SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS  # type: ignore
+        self._values: list[SlotValue] = get_slot_values()
         self._value: SlotValue | None = choice(self._values) if secondary_slot is None else None
         self.goto(x_position, y_position - SLOT_FONT_SIZE / 2 - SLOT_FONT_SIZE / 4)
 

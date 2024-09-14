@@ -40,14 +40,14 @@ SECONDARY_SLOT_DISPLAY_COLOR: str = "orange"
 # Slot values
 # Avoid using symbols like 7️⃣ which combines more Unicode characters
 SLOT_SYMBOLS: list[str] = ["🍒", "🍋", "🍊", "🍇", "🔔", "💎", "🎰"]
-SLOT_NUMBERS: list[int] = list(range(10))  # 0 to 9
+SLOT_NUMBERS: list[int] = list(range(1, 10))  # 1 to 9
 USE_SYMBOLS: bool = True  # Set as False to use numbers
 
 # Jackpot configuration
 JACKPOT_ENABLED: bool = True  # Set as False to disable jackpot
 JACKPOT_WINNING_SYMBOL: str = "🎰"  # Must be included in SLOT_SYMBOLS list
 JACKPOT_WINNING_NUMBER: int = 7  # Must be included in SLOT_NUMBERS list
-JACKPOT_PRIZE_MULTIPLIER: int = 100
+JACKPOT_PRIZE_MULTIPLIER: int = 17
 JACKPOT_COLOR: str = "orange"
 JACKPOT_X_POSITION: int = 380
 JACKPOT_Y_POSITION: int = -360
@@ -69,7 +69,7 @@ LOW_MONEY_COLOR: str = "red"
 MONEY_X_POSITION: int = 0
 MONEY_Y_POSITION: int = 360
 DEFAULT_MONEY: int = 1000
-WIN_PRIZE: int = 2000  # must be at least twice as big as PULL_COST
+WIN_PRIZE: int = 700  # must be at least twice as big as PULL_COST
 PULL_COST: int = 50
 
 # Instructions configuration
@@ -95,6 +95,9 @@ PRIZE_MESSAGES_Y_POSITION: int = 370
 PULL_MESSAGES_ALIGNMENT: str = "left"
 PULL_MESSAGES_X_POSITION: int = -390
 PULL_MESSAGES_Y_POSITION: int = 370
+RTP_ALIGNMENT: str = "left"
+RTP_X_POSITION: int = -390
+RTP_Y_POSITION: int = -380
 
 # Logger configuration
 LOGGER_ON: bool = True
