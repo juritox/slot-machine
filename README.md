@@ -61,6 +61,7 @@ git clone https://github.com/juritox/slot-machine.git
 
 - `src/:` Contains the main Python scripts for the game.
 - `assets/:` Includes gifs and icons used in the game.
+- `docs/:` Will be used for project documentation.
 - `logs/:` Directory where game logs are stored.
 
 ## Key Features
