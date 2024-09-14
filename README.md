@@ -10,11 +10,12 @@ This project showcases:
 - **Graphical User Interface (GUI):** Implements a graphical user interface using Turtle graphics.
 - **Game Mechanics:** Simulates basic slot machine operations without real money involvement.
 - **Logging:** Logs game actions and outcomes to text files in simple or detailed mode.
+- **Configuration:** Allows easy customization of game parameters through a configuration file.
+- **Error Handling:** Implements validation to ensure proper configuration settings.
+- **Cross-Platform Compatibility:** Includes scripts for running the game on both Windows and Unix-based systems.
 
 ## Game Showcase
-![Slot Machine](assets/screenshots/slot_machine_screenshot_symbols.png)
-
-![Slot Machine](assets/screenshots/slot_machine_screenshot_numbers.png)
+![Slot Machine](assets/gifs/slot_machine_showcase.gif)
 
 ## Installation Instructions
 
@@ -56,6 +57,25 @@ git clone https://github.com/juritox/slot-machine.git
 
 - **Advanced Configuration:** Modifying the configuration is intended for advanced users. It is recommended to use an Integrated Development Environment (IDE) for Python when making changes. Proceed with caution to avoid misconfigurations that might affect game functionality.
 
+## Project Structure
+
+- `src/:` Contains the main Python scripts for the game.
+- `assets/:` Includes gifs and icons used in the game.
+- `logs/:` Directory where game logs are stored.
+
+## Key Features
+
+- Customizable slot symbols and numbers
+- Adjustable win conditions and amounts
+- Jackpot functionality
+- Calculation of Return To Player (RTP)
+- Detailed logging for game events
+- Cross-platform compatibility
+
+## License
+
+This project is open source and available under the MIT license.
+
 ## Important Notes
 
-- **Educational Use Only**: This simulation is intended solely for educational purposes. It does not involve real money gambling and is designed to help learners understand programming concepts and basic game mechanics.
+**Educational Use Only**: This simulation is intended solely for educational purposes. It does not involve real money gambling and is designed to help learners understand programming concepts and basic game mechanics.
