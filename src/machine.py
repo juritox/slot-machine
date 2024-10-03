@@ -219,6 +219,7 @@ class Machine:
             self.processing = False
             self.logger.log("Pull sequence completed.")
 
+    @loggable(lambda self, *args, **kwargs: self.logger)
     def check_winning(self) -> bool:
         """
         Check if the current slot configuration is a winning one.
@@ -235,6 +236,7 @@ class Machine:
         self.logger.log(f"All slots matched! Slot values: {[slot.value for slot in self.main_slots]}")
         return True
 
+    @loggable(lambda self, *args, **kwargs: self.logger)
     def check_jackpot(self) -> bool:
         """
         Check if the current slot configuration is a jackpot winning one.

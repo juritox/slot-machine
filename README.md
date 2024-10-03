@@ -73,6 +73,27 @@ git clone https://github.com/juritox/slot-machine.git
 - Detailed logging for game events
 - Cross-platform compatibility
 
+## Understanding RTP (Return to Player)
+
+RTP, or Return to Player, is an important concept in this slot machine simulation. It represents the percentage of wagered amount that a slot machine is designed to pay back to players over time.
+
+### Key points about RTP in this simulation:
+
+1. **Definition:** RTP is expressed as a percentage. For example, an RTP of 95% in the simulation means that for every 100 credits wagered, the machine is designed to return 95 credits on average.
+
+2. **Long-term metric:** RTP is calculated over a large number of plays. Short-term results in the simulation can vary from this average.
+
+3. **Simulation mechanics:** The difference between 100% and the RTP represents the designed advantage in the simulation. Unlike real slot machines, this simulation allows for customizable RTP values for educational purposes.
+
+4. **Features in this project:** 
+   - The simulation calculates and displays the RTP, providing transparency about the game's mechanics.
+   - Users can modify parameters in `config.py` to set custom RTP values and observe how they affect game outcomes.
+   - This feature helps in understanding the relationship between game settings and simulated results.
+
+5. **Educational value:** By including customizable RTP, this project demonstrates important concepts in game design, probability theory, and the effects of different payout rates on game behavior.
+
+Remember, this is an educational simulation designed to explore programming concepts and game mechanics. It's not intended to represent or encourage real-world gambling activities.
+
 ## License
 
 This project is open source and available under the MIT license.
