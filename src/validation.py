@@ -8,7 +8,7 @@ the required criteria for the game to function correctly.
 from config import (
     NUMBER_OF_SLOTS, DEFAULT_SLOT_SIZE, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
     SLOT_SYMBOLS, SLOT_NUMBERS, JACKPOT_WINNING_SYMBOL, JACKPOT_WINNING_NUMBER,
-    PULL_COST, WIN_PRIZE
+    PULL_COST, WIN_PRIZE, FRAME_PADDING_FACTOR
 )
 
 
@@ -36,6 +36,8 @@ def validate_configurations() -> None:
         errors.append("MIN_PULL_CYCLES must not be greater than MAX_PULL_CYCLES.")
     if WIN_PRIZE < PULL_COST * 2:
         errors.append("WIN_PRIZE must be at least twice as big as PULL_COST.")
+    if FRAME_PADDING_FACTOR <= 0 or FRAME_PADDING_FACTOR >= 0.5:
+        errors.append("FRAME_PADDING_FACTOR must be between 0 and 0.5.")
 
     # Validate SLOT_SYMBOLS
     for i, symbol in enumerate(SLOT_SYMBOLS):

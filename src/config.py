@@ -61,6 +61,11 @@ SLOT_ALIGNMENT: str = "center"
 SLOT_FONT_SIZE: int = 50
 SLOT_FONT: tuple[str, int, str] = ("Courier", SLOT_FONT_SIZE, "bold")
 
+# Frame configuration
+FRAME_COLOR: str = "silver"
+FRAME_PADDING_FACTOR: float = 0.2  # Factor for frame padding relative to slot width, must be between 0 and 0.5
+FRAME_PEN_SIZE: int = 7
+
 # Money configuration
 MONEY_ALIGNMENT: str = "center"
 MONEY_FONT: tuple[str, int, str] = ("Courier", 20, "bold")

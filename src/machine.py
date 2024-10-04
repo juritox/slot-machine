@@ -17,7 +17,8 @@ from config import (
     STARTING_Y_POSITION, TOP_SECONDARY_SLOT, BOTTOM_SECONDARY_SLOT,
     MAIN_SLOT_COLOR, SECONDARY_SLOT_COLOR, MAIN_SLOT_OUTLINE_COLOR,
     SECONDARY_SLOT_OUTLINE_COLOR, MAIN_SLOT_DISPLAY_COLOR,
-    SECONDARY_SLOT_DISPLAY_COLOR, MIN_PULL_CYCLES, MAX_PULL_CYCLES
+    SECONDARY_SLOT_DISPLAY_COLOR, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
+    FRAME_COLOR, FRAME_PADDING_FACTOR, FRAME_PEN_SIZE
 )
 
 
@@ -79,9 +80,10 @@ class Machine:
     @loggable(lambda self, *args, **kwargs: self.logger)
     def create_machine(self) -> None:
         """
-        Create the graphics for the slot machine with main and secondary slots.
+        Create the graphics for the slot machine with main and secondary slots,
+        including a frame around the slots.
         """
-        self.logger.log("Creating the slot machine.")
+        self.logger.log("Creating the slot machine with frame.")
         # Calculate the width and height of one slot
         slot_width = DEFAULT_SLOT_SIZE * HORIZONTAL_SHAPE_STRETCH
         slot_height = DEFAULT_SLOT_SIZE * VERTICAL_SHAPE_STRETCH
@@ -96,6 +98,19 @@ class Machine:
         top_y_position = STARTING_Y_POSITION + slot_height
         bottom_y_position = STARTING_Y_POSITION - slot_height
 
+        # Calculate frame dimensions
+        total_height = slot_height * 3  # For top, main, and bottom slots
+        frame_padding = slot_width * FRAME_PADDING_FACTOR
+        frame_width = total_width + frame_padding * 2
+        frame_height = total_height + frame_padding * 2
+
+        # Calculate the centered frame position
+        frame_x = -frame_width / 2
+        frame_y = STARTING_Y_POSITION - total_height / 2 - frame_padding
+
+        # Create the frame
+        self.create_frame(frame_x, frame_y, frame_width, frame_height)
+
         for slot in range(NUMBER_OF_SLOTS):
             # Adding top secondary slots
             self.add_slot(starting_x_position + slot * slot_width, top_y_position,
@@ -107,6 +122,33 @@ class Machine:
         for slot in range(NUMBER_OF_SLOTS):
             # Adding main slots
             self.add_slot(starting_x_position + slot * slot_width, STARTING_Y_POSITION, MAIN_SLOT_DISPLAY_COLOR)
+
+    @loggable(lambda self, *args, **kwargs: self.logger)
+    def create_frame(self, x: float, y: float, width: float, height: float) -> None:
+        """
+        Create a frame around the slots.
+
+        Args:
+            x (float): The x-coordinate of the bottom-left corner of the frame.
+            y (float): The y-coordinate of the bottom-left corner of the frame.
+            width (float): The width of the frame.
+            height (float): The height of the frame.
+        """
+        self.logger.log(f"Creating frame at ({x}, {y}) with dimensions {width}x{height}")
+        frame = Turtle()
+        frame.hideturtle()
+        frame.penup()
+        frame.goto(x, y)
+        frame.pendown()
+        frame.color(FRAME_COLOR)
+        frame.pensize(FRAME_PEN_SIZE)
+
+        # Draw the frame
+        for _ in range(2):
+            frame.forward(width)
+            frame.left(90)
+            frame.forward(height)
+            frame.left(90)
 
     @loggable(lambda self, *args, **kwargs: self.logger)
     def add_slot(self, x_position: float, y_position: float, color: str, secondary_slot: str | None = None) -> None:
