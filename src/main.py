@@ -9,7 +9,7 @@ import sys
 import os
 from tkinter import PhotoImage
 from turtle import Screen, mainloop
-from typing import TypeAlias, NoReturn
+from typing import Protocol, Callable, Any, NoReturn
 from machine import Machine
 from messages import Instructions, Messages
 from money import Money
@@ -20,35 +20,57 @@ from config import (
     KEY_TO_PULL, KEY_TO_EXIT, ICON_FILE_PNG, ICON_FILE_ICO
 )
 
-# Define a type alias for Screen
-ScreenType: TypeAlias = Screen  # type: ignore
+
+class ScreenProtocol(Protocol):
+    """
+    Protocol defining the methods used from turtle.Screen in the slot machine game.
+    Used for type checking purposes.
+    """
+
+    def bye(self) -> None: ...
+
+    def listen(self) -> None: ...
+
+    def onkey(self, fun: Callable[[], None], key: str) -> None: ...
+
+    def setup(self, width: int | float, height: int | float) -> None: ...
+
+    def bgcolor(self, color: str) -> None: ...
+
+    def title(self, titlestring: str) -> None: ...
+
+    def tracer(self, n: int) -> None: ...
+
+    def update(self) -> None: ...
+
+    def getcanvas(self) -> Any: ...
 
 
-def exit_program(screen: ScreenType) -> NoReturn:
+def exit_program(screen: ScreenProtocol) -> NoReturn:
     """
     Exit the program.
 
     Args:
-        screen (Screen): The turtle screen to close.
+        screen (ScreenType): The turtle screen to close.
     """
-    screen.bye()  # type: ignore
+    screen.bye()
     sys.exit()
 
 
-def play(screen: ScreenType, machine: Machine) -> None:
+def play(screen: ScreenProtocol, machine: Machine) -> None:
     """
     Set up the game controls and start the game loop.
 
     Args:
-        screen (Screen): The turtle screen for the game.
+        screen (ScreenType): The turtle screen for the game.
         machine (Machine): The slot machine object.
     """
-    screen.listen()  # type: ignore
-    screen.onkey(machine.pull, KEY_TO_PULL)  # type: ignore
-    screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)  # type: ignore
+    screen.listen()
+    screen.onkey(machine.pull, KEY_TO_PULL)
+    screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)
 
 
-def set_icon(screen):
+def set_icon(screen: ScreenProtocol):
     """
     Set the application icon in a cross-platform manner.
     """
