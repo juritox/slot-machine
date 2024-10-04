@@ -39,8 +39,8 @@ SECONDARY_SLOT_DISPLAY_COLOR: str = "orange"
 
 # Slot values
 # Avoid using symbols like 7️⃣ which combines more Unicode characters
-SLOT_SYMBOLS: list[str] = ["🍒", "🍋", "🍊", "🍇", "🔔", "💎", "🎰"]
-SLOT_NUMBERS: list[int] = list(range(1, 10))  # 1 to 9
+SLOT_SYMBOLS: tuple[str, ...] = ("🍒", "🍋", "🍊", "🍇", "🔔", "💎", "🎰")
+SLOT_NUMBERS: tuple[int, ...] = tuple(range(1, 10))  # 1 to 9
 USE_SYMBOLS: bool = True  # Set as False to use numbers
 
 # Jackpot configuration

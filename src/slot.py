@@ -18,13 +18,16 @@ from config import (
 SlotValue: TypeAlias = str | int
 
 
-def get_slot_values() -> list[SlotValue]:
+def get_slot_values() -> tuple[SlotValue, ...]:
     """
     Get all possible slot symbols or numbers.
     Returns:
-        SlotValue | None: All possible slot values.
+        tuple[SlotValue, ...]: All possible slot values.
     """
-    return SLOT_SYMBOLS if USE_SYMBOLS else SLOT_NUMBERS  # type: ignore
+    if USE_SYMBOLS:
+        return SLOT_SYMBOLS
+    else:
+        return SLOT_NUMBERS
 
 
 class Slot(Turtle):
@@ -37,7 +40,7 @@ class Slot(Turtle):
     Attributes:
         _value (SlotValue | None): The current value displayed on the slot.
             It can be a string or an integer, or it can be None if this is a secondary slot.
-        _values (list[SlotValue]): The possible values for this slot, which can
+        _values (tuple[SlotValue, ...]): The possible values for this slot, which can
             be either strings or integers.
     """
 
@@ -56,7 +59,7 @@ class Slot(Turtle):
         self.color(color)
         self.penup()
         self.hideturtle()
-        self._values: list[SlotValue] = get_slot_values()
+        self._values: tuple[SlotValue, ...] = get_slot_values()
         self._value: SlotValue | None = choice(self._values) if secondary_slot is None else None
         self.goto(x_position, y_position - SLOT_FONT_SIZE / 2 - SLOT_FONT_SIZE / 4)
 
@@ -104,14 +107,14 @@ class Slot(Turtle):
         self._value = new_value
 
     @property
-    def values(self) -> list[SlotValue]:
+    def values(self) -> tuple[SlotValue, ...]:
         """
         Get the possible values for the slot.
 
         Returns:
-            list[SlotValue]: A copy of the list of possible values for the slot.
+            tuple[SlotValue, ...]: The tuple of possible values for the slot.
         """
-        return self._values.copy()  # Return a copy to prevent direct modification
+        return self._values
 
     def update_slot(self, secondary_slot: str | None = None,
                     main_slot_value: SlotValue | None = None) -> None:

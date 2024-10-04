@@ -5,7 +5,6 @@ It initializes the game, sets up the screen, creates the necessary objects,
 and starts the main game loop.
 """
 
-
 import sys
 import os
 from tkinter import PhotoImage

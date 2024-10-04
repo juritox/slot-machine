@@ -25,6 +25,7 @@ class Logger:
         simple_mode (bool): Indicates whether to use simple or detailed logging mode.
         log_file (str): The path to the log file.
     """
+
     def __init__(self, log_directory: str = LOG_DIRECTORY, logger_on: bool = LOGGER_ON,
                  simple_mode: bool = LOGGER_SIMPLE_MODE) -> None:
         """
@@ -135,6 +136,7 @@ def loggable(get_logger: Callable) -> Callable:
     Returns:
         Callable: A decorator function that wraps the input function.
     """
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -143,5 +145,7 @@ def loggable(get_logger: Callable) -> Callable:
             result = func(*args, **kwargs)
             logger.log(f"Function '{func.__name__}' returned", func.__name__, result, args, kwargs)
             return result
+
         return wrapper
+
     return decorator
