@@ -24,10 +24,8 @@ class Messages(Turtle):
     """
 
     def __init__(self) -> None:
-        """
-        Initialize the Messages object with default position and color.
-        """
         super().__init__()
+
         self.color(MESSAGES_COLOR)
         self.penup()
         self.hideturtle()
@@ -77,9 +75,7 @@ class Messages(Turtle):
         self.color(MESSAGES_COLOR)
 
     def remove_messages(self) -> None:
-        """
-        Clear all messages from the screen.
-        """
+        """Clear all messages from the screen."""
         self.clear()
 
 
@@ -92,10 +88,8 @@ class Instructions(Turtle):
     """
 
     def __init__(self) -> None:
-        """
-        Initialize the Instructions object with default text and position.
-        """
         super().__init__()
+
         self.instructions: str = DEFAULT_INSTRUCTIONS
         self.how_to_exit: str = HOW_TO_EXIT
         self.color(INSTRUCTIONS_COLOR)
@@ -115,14 +109,10 @@ class Instructions(Turtle):
                 f"instructions={self.instructions}, how_to_exit={self.how_to_exit})")
 
     def show_instructions(self) -> None:
-        """
-        Display the game instructions on the screen.
-        """
+        """Display the game instructions on the screen."""
         self.write(f"{self.instructions}", align=INSTRUCTIONS_ALIGNMENT, font=INSTRUCTIONS_FONT)
         self.write(f"{self.how_to_exit}", align=INSTRUCTIONS_ALIGNMENT, font=HOW_TO_EXIT_FONT)
 
     def hide_instructions(self) -> None:
-        """
-        Clear the instructions from the screen.
-        """
+        """Clear the instructions from the screen."""
         self.clear()

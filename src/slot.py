@@ -21,6 +21,7 @@ SlotValue: TypeAlias = str | int
 def get_slot_values() -> tuple[SlotValue, ...]:
     """
     Get all possible slot symbols or numbers.
+
     Returns:
         tuple[SlotValue, ...]: All possible slot values.
     """
@@ -37,25 +38,17 @@ class Slot(Turtle):
     This class extends the Turtle class to provide graphical representation
     and manages the slot's value and position.
 
-    Attributes:
-        _value (SlotValue | None): The current value displayed on the slot.
-            It can be a string or an integer, or it can be None if this is a secondary slot.
-        _values (tuple[SlotValue, ...]): The possible values for this slot, which can
-            be either strings or integers.
+    Args:
+        x_position (float): The x-coordinate for the slot's position.
+        y_position (float): The y-coordinate for the slot's position.
+        color (str): The color of the slot's text.
+        secondary_slot (str | None): Indicates if this is a secondary slot and its position (top or bottom).
+            If None is provided, this is a main slot.
     """
 
     def __init__(self, x_position: float, y_position: float, color: str, secondary_slot: str | None) -> None:
-        """
-        Initialize a new Slot instance.
-
-        Args:
-            x_position (float): The x-coordinate for the slot's position.
-            y_position (float): The y-coordinate for the slot's position.
-            color (str): The color of the slot's text.
-            secondary_slot (str | None): Indicates if this is a secondary slot and its position (top or bottom).
-                If None is provided, this is a main slot.
-        """
         super().__init__()
+
         self.color(color)
         self.penup()
         self.hideturtle()
@@ -101,6 +94,9 @@ class Slot(Turtle):
 
         Args:
             new_value (SlotValue | None): The new value to display on the slot. If None, the slot is a secondary one.
+
+        Raises:
+            ValueError: If new_value is not None and not in the allowed slot values.
         """
         if new_value is not None and new_value not in self._values:
             raise ValueError("Invalid slot value")
@@ -138,7 +134,5 @@ class Slot(Turtle):
             self.write(f"{self._value}", align=SLOT_ALIGNMENT, font=SLOT_FONT)
 
     def randomize_slot(self) -> None:
-        """
-        Randomly select a new value for the slot.
-        """
+        """Randomly select a new value for the slot."""
         self.value = choice(self._values)

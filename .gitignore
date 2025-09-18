@@ -15,5 +15,8 @@ logs/
 # Ignore .pyw files
 *.pyw
 
-# Ignore mypy cache directory
+# Ignore Ruff cache directory
+.ruff_cache/
+
+# Ignore MyPy cache directory
 .mypy_cache/

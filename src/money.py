@@ -26,23 +26,11 @@ class Money(Turtle):
 
     This class extends the Turtle class to provide graphical representation
     and manages the player's money, win prize, pull cost and jackpot.
-
-    Attributes:
-        _money (int): The current amount of money the player has.
-        _win_prize (int): The amount of money won for a successful pull.
-        _pull_cost (int): The cost of each pull.
-        _symbols_used (bool): Flag signaling if symbols are used in slots, otherwise numbers are used.
-        _jackpot_enabled (bool): Flag signaling if jackpot is enabled or disabled.
-        _jackpot_multiplier (int): Number by which the prize would be multiplied if jackpot is hit.
-        _jackpot_winning_symbol (str): Jackpot winning symbol if slots are using symbols.
-        _jackpot_winning_number (int): Jackpot winning number if slots are using numbers.
     """
 
     def __init__(self) -> None:
-        """
-        Initialize the money with its default value and position.
-        """
         super().__init__()
+
         self._money: int = DEFAULT_MONEY
         self._win_prize: int = WIN_PRIZE
         self._pull_cost: int = PULL_COST
@@ -183,6 +171,7 @@ class Money(Turtle):
     def calculate_loss_chance() -> float:
         """
         Calculate the chance of losing.
+
         Returns:
             float: The losing chance.
         """
@@ -261,9 +250,7 @@ class Money(Turtle):
         self.money -= amount
 
     def update_money(self) -> None:
-        """
-        Update the display of money on the screen.
-        """
+        """Update the display of money on the screen."""
         self.clear()
         self.goto(MONEY_X_POSITION, MONEY_Y_POSITION)
         if self.money < self.pull_cost:
@@ -278,17 +265,13 @@ class Money(Turtle):
         self.show_rtp()
 
     def show_win_prize(self) -> None:
-        """
-        Display the current win prize on the screen.
-        """
+        """Display the current win prize on the screen."""
         self.goto(PRIZE_MESSAGES_X_POSITION, PRIZE_MESSAGES_Y_POSITION)
         self.write(f"Win prize: ${self.win_prize}",
                    align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def show_pull_cost(self) -> None:
-        """
-        Display the current pull cost on the screen.
-        """
+        """Display the current pull cost on the screen."""
         self.goto(PULL_MESSAGES_X_POSITION, PULL_MESSAGES_Y_POSITION)
         self.write(f"Pull cost: ${self.pull_cost}",
                    align=PULL_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
@@ -296,6 +279,7 @@ class Money(Turtle):
     def show_jackpot(self) -> None:
         """
         Display the jackpot symbol or number and jackpot prize multiplier on the screen.
+
         If jackpot is disabled then it shows "JACKPOT DISABLED" instead.
         """
         self.goto(JACKPOT_X_POSITION, JACKPOT_Y_POSITION)
@@ -327,9 +311,7 @@ class Money(Turtle):
         self.write(jackpot_info, align=PRIZE_MESSAGES_ALIGNMENT, font=MONEY_MESSAGES_FONT)
 
     def show_rtp(self):
-        """
-        Display the current Return To Player (RPT) percentage.
-        """
+        """Display the current Return To Player (RPT) percentage."""
         self.goto(RTP_X_POSITION, RTP_Y_POSITION)
         self.write(f"RTP:\n{round(self.calculate_rtp(), 2)}%",
                    align=RTP_ALIGNMENT, font=MONEY_MESSAGES_FONT)

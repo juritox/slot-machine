@@ -24,26 +24,45 @@ from config import (
 class ScreenProtocol(Protocol):
     """
     Protocol defining the methods used from turtle.Screen in the slot machine game.
+
     Used for type checking purposes.
     """
 
-    def bye(self) -> None: ...
+    def bye(self) -> None:
+        """Close the turtle screen."""
+        ...
 
-    def listen(self) -> None: ...
+    def listen(self) -> None:
+        """Start listening for events."""
+        ...
 
-    def onkey(self, fun: Callable[[], None], key: str) -> None: ...
+    def onkey(self, fun: Callable[[], None], key: str) -> None:
+        """Bind a function to a key press event."""
+        ...
 
-    def setup(self, width: int | float, height: int | float) -> None: ...
+    def setup(self, width: int | float, height: int | float) -> None:
+        """Set the screen size."""
+        ...
 
-    def bgcolor(self, color: str) -> None: ...
+    def bgcolor(self, color: str) -> None:
+        """Set the background color of the screen."""
+        ...
 
-    def title(self, titlestring: str) -> None: ...
+    def title(self, titlestring: str) -> None:
+        """Set the window title."""
+        ...
 
-    def tracer(self, n: int) -> None: ...
+    def tracer(self, n: int) -> None:
+        """Control animation tracer delay."""
+        ...
 
-    def update(self) -> None: ...
+    def update(self) -> None:
+        """Update the screen manually."""
+        ...
 
-    def getcanvas(self) -> Any: ...
+    def getcanvas(self) -> Any:
+        """Get the underlying Tkinter canvas widget."""
+        ...
 
 
 def exit_program(screen: ScreenProtocol) -> NoReturn:
@@ -51,7 +70,7 @@ def exit_program(screen: ScreenProtocol) -> NoReturn:
     Exit the program.
 
     Args:
-        screen (ScreenType): The turtle screen to close.
+        screen (ScreenProtocol): The turtle screen to close.
     """
     screen.bye()
     sys.exit()
@@ -62,7 +81,7 @@ def play(screen: ScreenProtocol, machine: Machine) -> None:
     Set up the game controls and start the game loop.
 
     Args:
-        screen (ScreenType): The turtle screen for the game.
+        screen (ScreenProtocol): The turtle screen for the game.
         machine (Machine): The slot machine object.
     """
     screen.listen()
@@ -72,7 +91,14 @@ def play(screen: ScreenProtocol, machine: Machine) -> None:
 
 def set_icon(screen: ScreenProtocol):
     """
-    Set the application icon in a cross-platform manner.
+    Set the application window icon in a cross-platform manner using Tkinter.
+
+    Uses a ".ico" file for Windows and a ".png" file for other platforms.
+    Obtains the underlying Tkinter root window from the given screen object
+    to apply the icon accordingly.
+
+    Args:
+        screen (ScreenProtocol): The screen object providing access to the Tkinter root window.
     """
     root = screen.getcanvas().winfo_toplevel()
 

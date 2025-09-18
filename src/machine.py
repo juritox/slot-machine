@@ -33,21 +33,30 @@ class Machine:
         money (Money): The money management object for this machine.
         instructions (Instructions): The instructions display object.
         messages (Messages): The messages display object.
+        logger (Logger): The logger object for logging machine events.
         main_slots (list[Slot]): The list of main slot objects.
         top_secondary_slots (list[Slot]): The list of top secondary slot objects.
         bottom_secondary_slots (list[Slot]): The list of bottom secondary slot objects.
         processing (bool): Indicates whether the machine is currently processing a pull.
+
+    Args:
+        money (Money): The money management object for this machine.
+        instructions (Instructions): The instructions display object.
+        messages (Messages): The messages display object.
+        logger (Logger): The logger object for logging machine events.
     """
 
-    def __init__(self, money: Money, instructions: Instructions, messages: Messages, logger: Logger) -> None:
-        """
-        Initialize a new Machine instance.
+    money: Money
+    instructions: Instructions
+    messages: Messages
+    logger: Logger
+    main_slots: list[Slot]
+    top_secondary_slots: list[Slot]
+    bottom_secondary_slots: list[Slot]
+    processing: bool
 
-        Args:
-            money (Money): The money management object for this machine.
-            instructions (Instructions): The instructions display object.
-            messages (Messages): The messages display object.
-        """
+    def __init__(self, money: Money, instructions: Instructions, messages: Messages, logger: Logger) -> None:
+
         self.money: Money = money
         self.instructions: Instructions = instructions
         self.messages: Messages = messages
@@ -80,8 +89,9 @@ class Machine:
     @loggable(lambda self, *args, **kwargs: self.logger)
     def create_machine(self) -> None:
         """
-        Create the graphics for the slot machine with main and secondary slots,
-        including a frame around the slots.
+        Create the graphics for the slot machine with main and secondary slots.
+
+        Includes a frame around the slots.
         """
         self.logger.log("Creating the slot machine with frame.")
         # Calculate the width and height of one slot
@@ -184,9 +194,7 @@ class Machine:
 
     @loggable(lambda self, *args, **kwargs: self.logger)
     def update_slots(self) -> None:
-        """
-        Update all machine slots.
-        """
+        """Update all machine slots."""
         self.logger.log("Updating all slots.")
         for slot in self.main_slots:
             slot.update_slot()

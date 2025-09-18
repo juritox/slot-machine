@@ -24,18 +24,20 @@ class Logger:
         logger_on (bool): Indicates whether logging is enabled.
         simple_mode (bool): Indicates whether to use simple or detailed logging mode.
         log_file (str): The path to the log file.
+
+    Args:
+        log_directory (str): The directory to store the log file.
+        logger_on (bool): Indicates whether logging is enabled.
+        simple_mode (bool): Indicates whether to use simple or detailed logging mode.
     """
+
+    logger_on: bool
+    simple_mode: bool
+    log_file: str
 
     def __init__(self, log_directory: str = LOG_DIRECTORY, logger_on: bool = LOGGER_ON,
                  simple_mode: bool = LOGGER_SIMPLE_MODE) -> None:
-        """
-        Initialize a new Logger instance.
 
-        Args:
-            log_directory (str): The directory to store the log file.
-            logger_on (bool): Indicates whether logging is enabled.
-            simple_mode (bool): Indicates whether to use simple or detailed logging mode.
-        """
         self.logger_on: bool = logger_on
         self.simple_mode: bool = simple_mode
 
@@ -128,7 +130,7 @@ class Logger:
 
 def loggable(get_logger: Callable) -> Callable:
     """
-    A decorator that logs the calling and return of a function.
+    Log the calling and return of a function.
 
     Args:
         get_logger (Callable): A function that returns a Logger instance.
