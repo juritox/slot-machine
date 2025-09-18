@@ -23,12 +23,12 @@ To set up and run this project locally, follow these steps:
 
 ### Prerequisites
 
-- Ensure you have [Python](https://www.python.org/downloads/) version 3.12 or higher installed on your machine.
+- Ensure you have [Python](https://www.python.org/downloads/) version 3.13 or higher installed on your machine.
 - Ensure you have [pip](https://pip.pypa.io/en/stable/) installed for managing Python packages.
 
 ### Install Dependencies
 
-- Ensure you have Python 3.12 and the Turtle module installed. Turtle is usually included with Python, but if you encounter any issues, you can install it via pip:
+- Ensure you have Python 3.13 and the Turtle module installed. Turtle is usually included with Python, but if you encounter any issues, you can install it via pip:
 ```bash
 pip install PythonTurtle
 ```
