@@ -66,6 +66,14 @@ FRAME_COLOR: str = "silver"
 FRAME_PADDING_FACTOR: float = 0.2  # Factor for frame padding relative to slot width, must be between 0 and 0.5
 FRAME_PEN_SIZE: int = 7
 
+# Lever configuration
+LEVER_ENABLED: bool = True  # Set as False to disable lever
+LEVER_LEFT_OR_RIGHT: str = "right"  # Must be set to "left" or "right"
+LEVER_COLOR: str = "silver"
+LEVER_HANDLE_COLOR: str = "white"
+LEVER_PEN_SIZE: int = 8
+LEVER_HANDLE_PEN_SIZE: int = 12
+
 # Money configuration
 MONEY_ALIGNMENT: str = "center"
 MONEY_FONT: tuple[str, int, str] = ("Courier", 20, "bold")
