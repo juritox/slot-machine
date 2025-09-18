@@ -6,7 +6,7 @@ and starts the main game loop.
 """
 
 import sys
-import os
+from pathlib import Path
 from tkinter import PhotoImage
 from turtle import Screen, mainloop
 from typing import Protocol, Callable, Any, NoReturn
@@ -89,7 +89,7 @@ def play(screen: ScreenProtocol, machine: Machine) -> None:
     screen.onkey(lambda: exit_program(screen), KEY_TO_EXIT)
 
 
-def set_icon(screen: ScreenProtocol):
+def set_icon(screen: ScreenProtocol) -> None:
     """
     Set the application window icon in a cross-platform manner using Tkinter.
 
@@ -102,18 +102,18 @@ def set_icon(screen: ScreenProtocol):
     """
     root = screen.getcanvas().winfo_toplevel()
 
-    # Determine the correct path whether running as .py or .pyw
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    icons_path = os.path.join(base_path, "..", "assets", "icons")
+    # Use pathlib to determine the correct path
+    base_path = Path(__file__).parent
+    icons_path = base_path.parent / "assets" / "icons"
 
     if sys.platform == "win32":
         # For Windows
-        icon_path = os.path.join(icons_path, ICON_FILE_ICO)
-        root.iconbitmap(default=icon_path)
+        icon_path = icons_path / ICON_FILE_ICO
+        root.iconbitmap(default=str(icon_path))
     else:
         # For Linux and other platforms
-        icon_path = os.path.join(icons_path, ICON_FILE_PNG)
-        icon = PhotoImage(file=icon_path)
+        icon_path = icons_path / ICON_FILE_PNG
+        icon = PhotoImage(file=str(icon_path))
         root.iconphoto(True, icon)
 
 

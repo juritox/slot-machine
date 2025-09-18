@@ -6,7 +6,6 @@ and manages the slot's value and position.
 """
 
 from turtle import Turtle
-from typing import TypeAlias
 from random import choice
 from config import (
     SLOT_ALIGNMENT, SLOT_FONT_SIZE, SLOT_FONT,
@@ -15,7 +14,7 @@ from config import (
 )
 
 # Define a type alias for slot value
-SlotValue: TypeAlias = str | int
+type SlotValue = str | int
 
 
 def get_slot_values() -> tuple[SlotValue, ...]:

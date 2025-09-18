@@ -9,7 +9,7 @@ The "loggable" decorator can be used to automatically log the calling and return
 of a function.
 """
 
-from os import path, makedirs
+from pathlib import Path
 from time import strftime, localtime
 from functools import wraps
 from typing import Callable, Any
@@ -23,7 +23,7 @@ class Logger:
     Attributes:
         logger_on (bool): Indicates whether logging is enabled.
         simple_mode (bool): Indicates whether to use simple or detailed logging mode.
-        log_file (str): The path to the log file.
+        log_file (Path): The path to the log file.
 
     Args:
         log_directory (str): The directory to store the log file.
@@ -33,7 +33,7 @@ class Logger:
 
     logger_on: bool
     simple_mode: bool
-    log_file: str
+    log_file: Path
 
     def __init__(self, log_directory: str = LOG_DIRECTORY, logger_on: bool = LOGGER_ON,
                  simple_mode: bool = LOGGER_SIMPLE_MODE) -> None:
@@ -42,15 +42,15 @@ class Logger:
         self.simple_mode: bool = simple_mode
 
         # Get the project root directory
-        project_root = path.dirname(path.abspath(__file__))
-        log_directory = path.join(project_root, log_directory)
+        project_root = Path(__file__).parent
+        log_directory_path = project_root / log_directory
 
         # Ensure the log directory exists
-        if logger_on and not path.exists(log_directory):
-            makedirs(log_directory)
+        if logger_on:
+            log_directory_path.mkdir(parents=True, exist_ok=True)
 
         timestamp = strftime('%Y%m%d_%H%M%S', localtime())
-        self.log_file: str = path.join(log_directory, f"log_{timestamp}.log")
+        self.log_file: Path = log_directory_path / f"log_{timestamp}.log"
 
     def __str__(self) -> str:
         """
@@ -101,7 +101,7 @@ class Logger:
             timestamp = strftime('%Y-%m-%d %H:%M:%S', localtime())
             log_message = f"{timestamp} - {message}\n"
 
-            with open(self.log_file, mode="a", encoding="utf-8") as log_file:
+            with self.log_file.open(mode="a", encoding="utf-8") as log_file:
                 log_file.write(log_message)
 
     def _log_detailed(self, message: str, function_name: str, return_value: str | None,
@@ -124,7 +124,7 @@ class Logger:
                            f"kwargs={{{kwarg_str}}}): {message} "
                            f"Return value: {repr(return_value)}\n")
 
-            with open(self.log_file, mode="a", encoding="utf-8") as log_file:
+            with self.log_file.open(mode="a", encoding="utf-8") as log_file:
                 log_file.write(log_message)
 
 
