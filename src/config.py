@@ -113,9 +113,9 @@ RTP_X_POSITION: int = -390
 RTP_Y_POSITION: int = -380
 
 # Logger configuration
-LOGGER_ON: bool = True
+LOGGER_ON: bool = True  # Set as False to disable logging
 LOGGER_SIMPLE_MODE: bool = True  # Set as False to use detailed log mode
-LOG_DIRECTORY: str = "../logs"  # Directory to store logs
+LOG_DIRECTORY: str = "logs"  # Directory name for logs (will be created at project root)
 
 # Icon configuration
 ICON_FILE_PNG: str = "slot_machine_logo.png"
