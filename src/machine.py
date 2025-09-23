@@ -18,7 +18,9 @@ from config import (
     MAIN_SLOT_COLOR, SECONDARY_SLOT_COLOR, MAIN_SLOT_OUTLINE_COLOR,
     SECONDARY_SLOT_OUTLINE_COLOR, MAIN_SLOT_DISPLAY_COLOR,
     SECONDARY_SLOT_DISPLAY_COLOR, MIN_PULL_CYCLES, MAX_PULL_CYCLES,
-    FRAME_COLOR, FRAME_PADDING_FACTOR, FRAME_PEN_SIZE
+    FRAME_COLOR, FRAME_PADDING_FACTOR, FRAME_PEN_SIZE, LEVER_ENABLED,
+    LEVER_LEFT_OR_RIGHT, LEVER_COLOR, LEVER_HANDLE_COLOR,
+    LEVER_PEN_SIZE, LEVER_HANDLE_PEN_SIZE
 )
 
 
@@ -37,6 +39,7 @@ class Machine:
         main_slots (list[Slot]): The list of main slot objects.
         top_secondary_slots (list[Slot]): The list of top secondary slot objects.
         bottom_secondary_slots (list[Slot]): The list of bottom secondary slot objects.
+        lever_enabled (bool): Whether the lever is enabled.
         processing (bool): Indicates whether the machine is currently processing a pull.
 
     Args:
@@ -53,6 +56,7 @@ class Machine:
     main_slots: list[Slot]
     top_secondary_slots: list[Slot]
     bottom_secondary_slots: list[Slot]
+    lever_enabled: bool
     processing: bool
 
     def __init__(self, money: Money, instructions: Instructions, messages: Messages, logger: Logger) -> None:
@@ -64,6 +68,7 @@ class Machine:
         self.main_slots: list[Slot] = []
         self.top_secondary_slots: list[Slot] = []
         self.bottom_secondary_slots: list[Slot] = []
+        self.lever_enabled: bool = LEVER_ENABLED
         self.processing: bool = False
         self.create_machine()
 
@@ -133,6 +138,27 @@ class Machine:
             # Adding main slots
             self.add_slot(starting_x_position + slot * slot_width, STARTING_Y_POSITION, MAIN_SLOT_DISPLAY_COLOR)
 
+        # Create the lever if it is enabled
+        if self.lever_enabled:
+            lever_width = LEVER_PEN_SIZE * 2
+            lever_height = slot_height * 1.5
+
+            # Calculate the distance from frame edge to lever edge
+            lever_distance = lever_width * 1.2
+
+            # For lever on the right side
+            lever_x = frame_x + frame_width + lever_distance
+            if LEVER_LEFT_OR_RIGHT == "left":
+                # For lever on the left side
+                lever_x = frame_x - lever_distance - lever_width
+
+            # Center the lever vertically relative to the frame
+            lever_y = frame_y + frame_height / 2 - lever_height / 2
+
+            self.create_lever(lever_x, lever_y, lever_width, lever_height)
+        else:
+            self.logger.log("Creating the lever skipped because it is disabled in the configuration.")
+
     @loggable(lambda self, *args, **kwargs: self.logger)
     def create_frame(self, x: float, y: float, width: float, height: float) -> None:
         """
@@ -159,6 +185,67 @@ class Machine:
             frame.left(90)
             frame.forward(height)
             frame.left(90)
+
+    @loggable(lambda self, *args, **kwargs: self.logger)
+    def create_lever(self, x: float, y: float, width: float, height: float) -> None:
+        """
+        Create a lever for the slot machine.
+
+        Args:
+            x (float): The x-coordinate of the bottom-left corner of the lever.
+            y (float): The y-coordinate of the bottom-left corner of the lever.
+            width (float): The width of the lever.
+            height (float): The height of the lever.
+        """
+        self.logger.log(f"Creating lever at ({x}, {y}) with dimensions {width}x{height} "
+                        f"on the {LEVER_LEFT_OR_RIGHT} size of the machine")
+        lever = Turtle()
+        lever.hideturtle()
+        lever.penup()
+        lever.goto(x, y)
+        lever.pendown()
+        lever.color(LEVER_COLOR)
+        lever.pensize(LEVER_PEN_SIZE)
+
+        # Draw the lever
+        for _ in range(2):
+            lever.forward(width)
+            lever.left(90)
+            lever.forward(height)
+            lever.left(90)
+
+        # Create the lever handle
+        self.create_lever_handle(x, y, width, height)
+
+    @loggable(lambda self, *args, **kwargs: self.logger)
+    def create_lever_handle(self, x: float, y: float, width: float, height: float) -> None:
+        """
+        Create a handle for the lever.
+
+        Args:
+            x (float): The x-coordinate of the lever base.
+            y (float): The y-coordinate of the lever base.
+            width (float): The width of the lever.
+            height (float): The height of the lever.
+        """
+        self.logger.log("Creating circular lever handle on top of the lever")
+        handle = Turtle()
+        handle.hideturtle()
+        handle.penup()
+        handle.color(LEVER_HANDLE_COLOR)
+        handle.pensize(LEVER_HANDLE_PEN_SIZE)
+
+        # Calculate handle radius and position
+        handle_radius = width * 0.75  # Circle radius relative to lever width
+
+        # Position handle at the center top of the lever
+        handle_x = x + width / 2
+        handle_y = y + height
+
+        # Move to position and draw circle
+        handle.goto(handle_x, handle_y)
+        handle.pendown()
+        handle.circle(handle_radius)
 
     @loggable(lambda self, *args, **kwargs: self.logger)
     def add_slot(self, x_position: float, y_position: float, color: str, secondary_slot: str | None = None) -> None:

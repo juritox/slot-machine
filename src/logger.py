@@ -42,7 +42,8 @@ class Logger:
         self.simple_mode: bool = simple_mode
 
         # Get the project root directory
-        project_root = Path(__file__).parent
+        project_root = Path(__file__).parent.parent
+        # Create path to logs directory at project root
         log_directory_path = project_root / log_directory
 
         # Ensure the log directory exists
